@@ -1,30 +1,33 @@
 import React, {useState} from 'react';
 import {dbService, storageService} from 'myBase';
 import { v4 as uuidv4 } from 'uuid';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 function KweetFactory({userObj}) {
   const [kweet, setKweet] = useState("");
-  const [attatchment, setAttatchment] = useState("");
+  const [attachment, setAttachment] = useState("");
 
   const onSubmit = async (event) => {
+    if (kweet === "") {
+      return;
+    }
     event.preventDefault();
-    let attatchmentUrl = ""
-    if(attatchment !== ""){
+    let attachmentUrl = ""
+    if(attachment !== ""){
       const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
-      const response = await fileRef.putString(attatchment, "data_url");
-      attatchmentUrl = await response.ref.getDownloadURL();
+      const response = await fileRef.putString(attachment, "data_url");
+      attachmentUrl = await response.ref.getDownloadURL();
     }
     const kweetObj ={
       text: kweet,
       createdAt: Date.now(),
       creatorId: userObj.uid,
-      attatchmentUrl,
+      attachmentUrl,
     };
     dbService.collection("kweets").add(kweetObj);
     setKweet("");
-    setAttatchment("");
-    let fileInput = document.getElementById("fileInput")
-    fileInput.value = null;
+    setAttachment("");
   };
 
   const onChange = (event) => {
@@ -44,27 +47,55 @@ function KweetFactory({userObj}) {
       const {
         currentTarget: {result},
       } = finishedEvent;
-      setAttatchment(result);
+      setAttachment(result);
     };
     reader.readAsDataURL(theFile);
   };
 
   const onAttachmentClear = () =>{
-    setAttatchment(null);
-    let fileInput = document.getElementById("fileInput")
-    fileInput.value = null;
+    setAttachment("");
   };
 
 
   return (
-    <form onSubmit={onSubmit}>
-      <input type="text" value={kweet} onChange={onChange} placeholder="What's on your mind?" maxLength="120" />
-      <input id="fileInput" type="file" accept="image/*" onChange={onFileChange} />
-      <input type="submit" value="Kweet" />
-      { attatchment && ( 
-        <div>
-          <img src={attatchment} width="80px" />
-          <button onClick={onAttachmentClear}>Clear</button>
+    <form onSubmit={onSubmit} className="factoryForm">
+      <div className="factoryInput__container">
+        <input 
+          className="factoryInput__input"
+          type="text" 
+          value={kweet} 
+          onChange={onChange}
+          placeholder="무슨 일이 일어나고 있나요?" 
+          maxLength="120" 
+        />
+        <input type="submit" value="&rarr;" className="factoryInput__arrow" />
+      </div>
+      <label for="attach-file" className="factoryInput__label">
+        <span>Add photos</span>
+        <FontAwesomeIcon icon={faPlus} />
+      </label>
+      <input 
+        id="attach-file" 
+        type="file" 
+        accept="image/*" 
+        onChange={onFileChange} 
+        style={{
+          opacity: 0,
+        }}
+      />
+      { attachment && ( 
+        <div className="factoryForm__attachment">
+          <img 
+          alt="kweet img" 
+          src={attachment} 
+          style={{
+            backgroundImage: attachment,
+          }}
+        />
+          <div className="factoryForm__clear" onClick={onAttachmentClear}>
+            <span>Remove</span>
+            <FontAwesomeIcon icon={faTimes} />
+          </div>
        </div>
       )}
       </form>

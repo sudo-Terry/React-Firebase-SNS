@@ -1,5 +1,7 @@
 import { dbService, storageService } from 'myBase';
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Kweet = (({kweetObj, isOwner}) => {
   const [editing, setEditing] = useState(false);
@@ -10,7 +12,7 @@ const Kweet = (({kweetObj, isOwner}) => {
     if(ok){
       await dbService.doc(`kweets/${kweetObj.id}`).delete();
       if(kweetObj.attachmentUrl !== "" ){
-        await storageService.refFromURL(kweetObj.attatchmentUrl).delete();
+        await storageService.refFromURL(kweetObj.attachmentUrl).delete();
       }
     }
   }
@@ -33,31 +35,38 @@ const Kweet = (({kweetObj, isOwner}) => {
   }
 
   return (
-    <div>
-      {
-        editing ? (
-          <>
-          <form onSubmit={onSubmit}>
+    <div className="kweet">
+      {editing ? (
+        <>
+          <form onSubmit={onSubmit} className="container kweetEdit">
             <input 
               placeholder="Edit your Kweet"
               value={newKweet} 
               onChange={onChange}
               required 
+              autoFocus
+              className="formInput"
             />
-            <input type="submit" value="Update Kweet" />
+            <input type="submit" value="Update Kweet" className="formBtn"/>
           </form>
-          <button onClick={toggleEditing}>Cancel</button>
+          <button onClick={toggleEditing} className="formBtn cancelBtn">Cancel</button>
         </>
         ) : (
         <>
           <h4>{kweetObj.text}</h4>
-          {kweetObj.attatchmentUrl &&
-            <img src={kweetObj.attatchmentUrl} width="80px" />
+          {kweetObj.attachmentUrl &&
+            <img alt="kweet img" src={kweetObj.attachmentUrl}/>
           }
           {isOwner && 
           <>
-            <button onClick={onDeleteClick}>Delete Kweet</button>
-            <button onClick={toggleEditing}>Edit Kweet</button>
+            <div class="kweet__actions">
+              <span onClick={onDeleteClick}>
+                <FontAwesomeIcon icon={faTrash} />
+              </span>
+              <span onClick={toggleEditing}>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </span>
+            </div>
           </>}
         </>
       )}

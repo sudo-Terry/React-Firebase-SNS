@@ -29,7 +29,7 @@ function AuthForm(props) {
         //sign in
         data = await authService.signInWithEmailAndPassword(email, password);
       }
-      console.log(data);
+      //console.log(data);
     }catch(error){
       setError(error.message);
     }
@@ -39,27 +39,29 @@ function AuthForm(props) {
 
   return (
     <>
-       <form onSubmit={onSubmit}>
-      <input 
-        type="email"
-        placeholder="Email"
-        value={email}
-        name="email" 
-        required 
-        onChange={onChange}
-      />
-      <input 
-        type="password" 
-        placeholder="Password" 
-        value={password} 
-        name="password"
-        required 
-        onChange={onChange}
-      />
-      <input type="submit" value={newAccount ? "Create Account" : "Sign In"} />
-      {error}
-    </form>
-    <span onClick={toggleAccount}>{newAccount ? "Sign In" : "Create Account"}</span>
+      <form onSubmit={onSubmit} className="container">
+        <input 
+          type="email"
+          placeholder="Email"
+          value={email}
+          name="email" 
+          required 
+          onChange={onChange}
+          className="authInput"
+        />
+        <input 
+          type="password" 
+          placeholder="Password" 
+          value={password} 
+          name="password"
+          required 
+          onChange={onChange}
+          className="authInput"
+        />
+        <input type="submit" value={newAccount ? "Create Account" : "Sign In"} className="authInput authSubmit" />
+        {error && <span className="authError">{error}</span>}
+      </form>
+      <span onClick={toggleAccount} className="authSwitch">{newAccount ? "Sign In" : "Create Account"}</span>
     </>
   );
 }

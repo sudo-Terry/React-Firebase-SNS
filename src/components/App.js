@@ -4,20 +4,18 @@ import {authService} from 'myBase';
 
 function App() {
   const [init, setInit] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userObj, setUserObj] = useState(null);
   
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if(user){
-        setIsLoggedIn(true);
         setUserObj({
-          displayName: user.gdisplayName,
+          displayName: user.displayName,
           uid: user.uid,
           updateProfile: (args) => user.updateProfile(args),
         });
       }else{
-        setIsLoggedIn(null);
+        setUserObj(null);
       }
       setInit(true);
     });
@@ -30,13 +28,12 @@ function App() {
       uid: user.uid,
       updateProfile: (args) => user.updateProfile(args),
     });
-  }
+  };
 
   return (
     <>
-      <header><h2>Kwitter</h2></header>
-      { init ? <AppRouter refreshUser={refreshUser} isLoggedIn={isLoggedIn} userObj={userObj} /> : "Initializing..."}
-      <footer>&copy; {new Date().getFullYear()} Kwitter</footer>
+      { init ? <AppRouter refreshUser={refreshUser} isLoggedIn={Boolean(userObj)} userObj={userObj} /> : "Initializing..."}
+      {/* <footer>&copy; {new Date().getFullYear()} Kwitter</footer> */}
     </>
   );
 }

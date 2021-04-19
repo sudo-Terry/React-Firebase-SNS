@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { dbService, storageService } from 'myBase';
+import { dbService } from 'myBase';
 import Kweet from 'components/Kweet';
 import KweetFactory from 'components/KweetFactory';
 
@@ -17,9 +17,9 @@ const Home = ({userObj}) => {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <KweetFactory userObj={userObj} />
-      <div>
+      <div style={{ marginTop: 30 }}>
         {kweets.map((kweet) => (
           <Kweet key={kweet.id} kweetObj={kweet} isOwner={kweet.creatorId === userObj.uid}/>
         ))}
