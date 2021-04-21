@@ -1,35 +1,52 @@
 import React from 'react';
+import NavComponent from './NavComponent';
 import {Link} from 'react-router-dom';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faSearch, faBell, faEnvelope, faBookmark, faListAlt, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 
-const Navigation = ({userObj}) => <nav>
-  <ul style={{ display: "flex", justifyContent: "center", marginTop: 50 }}>
-    <li>
-      <Link to="/" style={{ marginRight: 10 }}>
-        <FontAwesomeIcon icon={faTwitter} color={"#04AAFF"} size="2x" />
-      </Link>
-    </li>
-    <li>
-      <Link to="/profile"
-        style = {{
-          marginLeft: 10,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          fontSize: "12px",
-        }}
-      >
-        <FontAwesomeIcon icon={faUser} color={"#04AAFF"} size="2x" />
-        <span style={{ marginTop: 10 }}>
-          {userObj.displayName
-              ? `${userObj.displayName}의 Profile`
-              : "Profile"}
-        </span>
-      </Link>
-    </li>
-  </ul>
-</nav>
+function Navigation ({userObj}) {
+  return (
+    <nav>
+      <ul className="navlist">
+      <Link to="/" >
+        <li>
+          <NavComponent icon={faTwitter} iconName={"홈"} />
+        </li>
+        </Link>
+        <Link to="/myprofile" >
+          <li>
+           <NavComponent icon={faUser} iconName={"프로필"} />
+          </li>
+        </Link>
+        <li>
+          <NavComponent icon={faSearch} iconName={"탐색하기"} />
+        </li>
+        <li>
+          <NavComponent icon={faBell} iconName={"알림"} />
+        </li>
+        <li>
+          <NavComponent icon={faEnvelope} iconName={"쪽지"} />
+        </li>
+        <li>
+          <NavComponent icon={faBookmark} iconName={"북마크"} />
+        </li>
+        <li>
+          <NavComponent icon={faListAlt} iconName={"리스트"} />
+        </li>
+        <Link to="/profile" >
+        <li>
+          <NavComponent icon={faEllipsisH} iconName={"더 보기"} />
+        </li>
+        </Link>
+        <li>
+          <span>
+            크윗
+          </span>
+        </li>
+      </ul>
+    </nav>
+  );
+} 
+
 
 export default Navigation;

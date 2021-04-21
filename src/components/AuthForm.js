@@ -19,17 +19,15 @@ function AuthForm(props) {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    let data;
     try{
       if(newAccount){
         //create account
-        data = await authService.createUserWithEmailAndPassword(email, password);
+        await authService.createUserWithEmailAndPassword(email, password);
         setNewAccount(false);
       }else{
         //sign in
-        data = await authService.signInWithEmailAndPassword(email, password);
+        await authService.signInWithEmailAndPassword(email, password);
       }
-      //console.log(data);
     }catch(error){
       setError(error.message);
     }

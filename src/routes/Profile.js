@@ -1,20 +1,17 @@
-import { authService } from 'myBase';
+import { authService, storageService } from 'myBase';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 const Profile = ({ refreshUser, userObj }) => {
   const history = useHistory();
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
+  const [userImg, setUserImg] = useState(userObj.photoURL);
+  const [userBackGround, setUserBackGround] = useState("")
 
   const onLogOutClick = () => {
     authService.signOut();
     history.push("/");
   };  
-
-  const getMyKweets = async () => {
-    //const kweets = await dbService.collection("kweets").where("creatorId", "==", userObj.uid).orderBy("createdAt").get();
-    //console.log(kweets.docs.map(doc => doc.data())); 
-  };
 
   const onChange = (event) => {
     const {
@@ -31,15 +28,92 @@ const Profile = ({ refreshUser, userObj }) => {
       });
       refreshUser();
     }
+    let userImgUrl = ""
+    if(userObj.photoURL !== userImg){
+      const fileRef = storageService.ref().child(`userImg/${userObj.uid}`);
+      const response = await fileRef.putString(userImg, "data_url");
+      userImgUrl = await response.ref.getDownloadURL();
+      await userObj.updateProfile({ 
+        photoURL: userImgUrl,
+      });
+      refreshUser();
+    }
+    let userBackGroundUrl = ""
+    const fileRef = storageService.ref().child(`userBackGround/${userObj.uid}`);
+    const response = await fileRef.putString(userBackGround, "data_url");
+    userBackGroundUrl = await response.ref.getDownloadURL();
+    setUserBackGround(userBackGroundUrl);
   };
 
-  useEffect(() => {
-    getMyKweets();
+  useEffect (() => {
+    getUserBackGround();
   }, []);
+
+  const getUserBackGround = async () => {
+    let userBackGroundUrl = ""
+    const spaceRef = storageService.ref().child(`userBackGround/${userObj.uid}`);
+    userBackGroundUrl = await spaceRef.getDownloadURL();
+    setUserBackGround(userBackGroundUrl);
+  }
+
+  const onFileChange = (event) => {
+    const {
+      target: {files},
+    } = event;
+    const theFile = files[0];
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      const {
+        currentTarget: {result},
+      } = finishedEvent;
+      setUserImg(result);
+    };
+    reader.readAsDataURL(theFile);
+  };
+
+  const onBackChange = (event) => {
+    const {
+      target: {files},
+    } = event;
+    const theFile = files[0];
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      const {
+        currentTarget: {result},
+      } = finishedEvent;
+      setUserBackGround(result);
+    };
+    reader.readAsDataURL(theFile);
+  };
+
 
   return (
     <div className="container">
       <form onSubmit={onSubmit}  className="profileForm"> 
+        <label for="backGroundImg-file">
+          <img src={userBackGround} alt="backGroundImg" style={{width: "99%", height: "200px", overflow: "hidden", objectFit: "cover"}} />
+        </label>
+        <input 
+          id="backGroundImg-file" 
+          type="file" 
+          accept="image/*" 
+          onChange={onBackChange} 
+          style={{
+            opacity: 0,
+          }}
+        />
+        <label for="userImg-file">
+          <img src={userImg} alt="profileImg" style={{width: "50px", height: "50px", overflow: "hidden", objectFit: "cover"}} />
+        </label>
+        <input 
+          id="userImg-file" 
+          type="file" 
+          accept="image/*" 
+          onChange={onFileChange} 
+          style={{
+            opacity: 0,
+          }}
+        />
         <input 
           onChange={onChange} 
           autoFocus 
