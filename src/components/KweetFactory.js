@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {dbService, storageService} from 'myBase';
 import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faImage, faTimes, faGlobeAmericas } from "@fortawesome/free-solid-svg-icons";
 
 function KweetFactory({userObj}) {
   const [kweet, setKweet] = useState("");
@@ -23,6 +23,8 @@ function KweetFactory({userObj}) {
       text: kweet,
       createdAt: Date.now(),
       creatorId: userObj.uid,
+      creatorName: userObj.displayName,
+      creatorImg: userObj.photoURL,
       attachmentUrl,
     };
     dbService.collection("kweets").add(kweetObj);
@@ -58,47 +60,65 @@ function KweetFactory({userObj}) {
 
 
   return (
-    <form onSubmit={onSubmit} className="factoryForm">
-      <div className="factoryInput__container">
-        <input 
-          className="factoryInput__input"
-          type="text" 
-          value={kweet} 
-          onChange={onChange}
-          placeholder="무슨 일이 일어나고 있나요?" 
-          maxLength="120" 
-        />
-        <input type="submit" value="&rarr;" className="factoryInput__arrow" />
-      </div>
-      <label for="attach-file" className="factoryInput__label">
-        <span>Add photos</span>
-        <FontAwesomeIcon icon={faPlus} />
-      </label>
-      <input 
-        id="attach-file" 
-        type="file" 
-        accept="image/*" 
-        onChange={onFileChange} 
-        style={{
-          opacity: 0,
-        }}
-      />
-      { attachment && ( 
-        <div className="factoryForm__attachment">
-          <img 
-          alt="kweet img" 
-          src={attachment} 
-          style={{
-            backgroundImage: attachment,
-          }}
-        />
-          <div className="factoryForm__clear" onClick={onAttachmentClear}>
-            <span>Remove</span>
-            <FontAwesomeIcon icon={faTimes} />
+    <form onSubmit={onSubmit} className="factory-form">
+      <div className="factory-container">
+        <span className="factory-profile">
+          <img src={userObj.photoURL} className="factory-profimg" />
+        </span>
+        <span className="factory-kweet">
+          <div className="factory-inputbox">
+            <input 
+              className="factory-input"
+              type="text" 
+              value={kweet} 
+              onChange={onChange}
+              placeholder="무슨 일이 일어나고 있나요?" 
+              maxLength="120" 
+            />
           </div>
-       </div>
-      )}
-      </form>
+          <div className="factory-attachbox">
+            { attachment && ( 
+              <div className="factory-attachment">
+                <img 
+                  alt="kweet img" 
+                  src={attachment} 
+                  style={{
+                    backgroundImage: attachment,
+                  }}
+                />
+                <div className="factory-attachclear" onClick={onAttachmentClear}>
+                  <span>Remove</span>
+                  <FontAwesomeIcon icon={faTimes} />
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="factory-kweetset">
+            <span className="factory-kweetsetbtn">
+              <FontAwesomeIcon icon={faGlobeAmericas} size="x" color="#04aaff" />
+              &nbsp;&nbsp;모든 사람이 답글을 달 수 있습니다
+            </span>
+          </div>
+          <div className="factory-footer">
+            <div className="factory-iconset">
+              <label for="factory-attach-file" className="factory-imglabel">
+                <FontAwesomeIcon icon={faImage} size="2x" />
+              </label>
+              <input 
+                id="factory-attach-file" 
+                type="file" 
+                accept="image/*" 
+                multiple
+                onChange={onFileChange} 
+              />
+            </div>
+            <span className="factory-kweetbtn">
+              <input type="submit" value="크윗" />
+            </span>
+          </div>
+        </span>
+      </div>
+    </form>
   );
 }
 

@@ -10,15 +10,24 @@ import Navigation from './Navigation';
 const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
   return(
     <Router>
-      <div style={{display: "flex", justifyContent: "center" , margin: "0 auto"}}>
+      <div style={{display: "flex", justifyContent: "center" , alignItems:"stretch", margin: "0 auto"}}>
         {isLoggedIn && <Navigation userObj={userObj}/>}
         <Switch>
           {isLoggedIn ? (
-            <>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                height: "100%",
+              }}
+            >
               <div
               style={{
                 width: "600px",
                 display: "flex",
+                height: "100%",
+                flex:"1",
+                minHeight:"100vh",
                 justifyContent: "center",
                 borderLeft: "1px solid #ddd",
                 borderRight: "1px solid #ddd",
@@ -34,7 +43,7 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
                   <MyProfile userObj={userObj} />
                 </Route>
               </div>
-            </>  
+            </div>  
           ) : (
             <Route exact path="/">
               <Auth />

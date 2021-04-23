@@ -8,6 +8,11 @@ input {
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+  overflow: auto;
+}
+
 body {
   margin: 0px;
   background-color: white;
@@ -15,6 +20,7 @@ body {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 14px;
   color: black;
+  height: 100%;
 }
 
 button {
@@ -83,7 +89,8 @@ ul {
 
 .navlist {
   width: 234px;
-  height: 100%;
+  height: 400px;
+  margin-right: 12px;
 }
 
 .navcomp-container {
@@ -104,7 +111,7 @@ ul {
   position: relative;
 }
 
-.navcomp-wrapper span {
+.navcomp-namewrapper {
   font-weight: bold;
   font-size: 18px;
 }
@@ -112,6 +119,25 @@ ul {
 .navcomp-icons {
   width: 100%;
   margin-right: 15px;
+}
+
+.nav-kweetbtn {
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 210px;
+  height: 48px;
+  color: white;
+  background-color: #04aaff;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-kweetbtn:hover {
+  background-color: #0e8ac9;
+  transition-duration: 0.2s;
 }
 
 /* Profile */
@@ -134,75 +160,159 @@ ul {
 /* ======================================================================== */
 /* ======================================================================== */
 
-.factoryForm {
+.factory-form {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
-  align-items: center;
 }
 
-.factoryInput__container {
-  display: flex;
+.factory-container {
+  display: inline;
   flex-wrap: wrap;
   position: relative;
-  align-items: center;
-  justify-content: space-between;
   width: 100%;
-  margin-bottom: 20px;
+  padding: 4px 16px 8px;
+  border-bottom: 1px solid #ddd;
 }
 
-.factoryInput__input {
-  flex-grow: 1;
-  height: 40px;
-  padding: 0 20px;
-  color: black;
-  border: 1px solid #04aaff;
-  border-radius: 20px;
-  font-weight: 500;
-  font-size: 12px;
+.factory-profile {
+  display: inline;
+  width: 48px;
+  height: 100%;
+  padding-top: 4px;
+  margin-right: 12px;
+  cursor: pointer;
 }
 
-.factoryInput__arrow {
-  position: absolute;
-  right: 0;
-  width: 40px;
-  height: 40px;
-  text-align: center;
-  padding: 0;
-  background-color: #04aaff;
+.factory-profimg {
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+  object-fit: cover;
   border-radius: 50%;
+}
+
+.factory-profimg:hover {
+  filter: brightness(70%);
+  transition-duration: 0.2s;
+}
+
+.factory-kweet {
+  width: 500px;
+  padding-top: 4px;
+  display: inline;
+}
+
+.factory-inputbox {
+  width: 100%;
+  height: 52px;
+  padding: 12px 0px;
+  padding-left: 10px;
+  pointer-events: auto;
+}
+
+.factory-input {
+  width: 100%;
+  flex-grow: 1;
+  color: black;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.factory-kweetset {
+  width: 100%;
+  height: 44px;
+  padding: 0px 4px 12px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+}
+
+.factory-kweetsetbtn {
+  font-size: 13px;
+  font-weight: 700;
+  color: #04aaff;
+  cursor: pointer;
+  border-radius: 9999px;
+  padding: 6px;
+}
+
+.factory-kweetsetbtn:hover {
+  background-color: #04abff49;
+  transition-duration: 0.2s;
+}
+
+.factory-kweetbtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 62px;
+  height: 38px;
+  padding: 0 15px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  background-color: #04aaff;
+  border-radius: 9999px;
   color: white;
 }
 
-.factoryInput__label {
+.factory-kweetbtn:hover {
+  background-color: #0e8ac9;
+  transition-duration: 0.2s;
+}
+
+.factory-footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-left: 5px;
+  margin-top: 12px;
+}
+
+.factory-iconset {
+  display: flex;
+  justify-content: center;
+}
+
+.factory-iconset input {
+  opacity: 0;
+  width: 0px;
+  height: 0px;
+}
+
+.factory-imglabel {
   cursor: pointer;
   color: #04aaff;
 }
 
-.factoryInput__label span {
+.factory-imglabel span {
   margin-right: 10px;
   font-size: 12px;
 }
 
-.factoryForm__attachment {
+.factory-attachbox {
+  width: 100%;
+}
+
+.factory-attachment {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.factoryForm__attachment img {
-  height: 80px;
-  width: 80px;
-  border-radius: 40px;
+.factory-attachment img {
+  overflow: hidden;
+  object-fit: cover;
 }
 
-.factoryForm__clear {
+.factory-attachclear {
   color: #04aaff;
   cursor: pointer;
   text-align: center;
 }
 
-.factoryForm__clear span {
+.factory-attachclear span {
   margin-right: 10px;
   font-size: 12px;
 }
@@ -211,51 +321,75 @@ ul {
 /* ======================================================================== */
 /* ======================================================================== */
 
-.kweetEdit .formBtn {
+.kweet-edit .kweet-updatebtn {
   cursor: pointer;
   margin-top: 15px;
   margin-bottom: 5px;
 }
 
-.kweet {
-  margin-bottom: 20px;
-  max-width: 320px;
+.kweet-container {
   width: 100%;
   padding: 20px;
+  padding-top: 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   position: relative;
   background-color: white;
   color: rgba(0, 0, 0, 0.8);
-  border-radius: 10px;
-  border: 1px solid #777;
+  border-bottom: 1px solid #ddd;
+}
+
+.kweet-profile {
+  margin-right: 15px;
+  padding-bottom: 15px;
+}
+
+.kweet-profile img {
+  cursor: pointer;
+}
+
+.kweet-nametag span {
+  cursor: pointer;
+}
+
+.kweet-nametag span:hover {
+  text-decoration: underline;
+}
+
+.kweet-profile img:hover {
+  filter: brightness(70%);
+  transition-duration: 0.2s;
 }
 
 .kweet h4 {
   font-size: 14px;
 }
 
-.kweet img {
-  right: -10px;
-  top: 20px;
-  position: absolute;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  margin-top: 10px;
+.kweet-body img {
+  width: 100%;
+  height: 40vh;
+  overflow: hidden;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 20px;
 }
 
-.kweet__actions {
+.kweet-body img:hover {
+  filter: brightness(70%);
+  transition-duration: 0.2s;
+}
+
+.kweet-actions {
   position: absolute;
   right: 10px;
   top: 10px;
 }
 
-.kweet__actions span {
+.kweet-actions span {
   cursor: pointer;
 }
 
-.kweet__actions span:first-child {
+.kweet-actions span:first-child {
   margin-right: 10px;
 }
 

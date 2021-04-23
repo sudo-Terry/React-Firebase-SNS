@@ -17,14 +17,14 @@ const Home = ({userObj}) => {
   }, []);
 
   return (
-    <div className="container">
-       <div className="header Home_header" style={{ width: "100%", height: "53px", display: "flex" ,justifyContent: "flex-start"}}>
-        <span style={{ fontSize: "20px", fontWeight: "bold", marginLeft:"10px", marginTop: "4px" }}>
+    <div className="container" style={{ overflow: "auto" }}>
+       <div className="header Home_header" style={{ width: "100%", height: "53px", display: "flex" ,justifyContent: "flex-start", alignItems:"center"}}>
+        <span style={{ fontSize: "20px", fontWeight: "bold", margin: "10px" }}>
           홈
         </span>
       </div>
       <KweetFactory userObj={userObj} />
-      <div style={{ marginTop: 30, display:"flex", alignItems:"center", flexFlow:"column" }}>
+      <div style={{ display:"flex", alignItems:"center", flexFlow:"column"}}>
         {kweets.map((kweet) => (
           <Kweet key={kweet.id} kweetObj={kweet} isOwner={kweet.creatorId === userObj.uid}/>
         ))}

@@ -38,12 +38,10 @@ function Navigation ({userObj}) {
           <NavComponent icon={faEllipsisH} iconName={"더 보기"} />
         </li>
         </Link>
-        <li>
-          <span>
-            크윗
-          </span>
-        </li>
       </ul>
+      <div className="nav-kweetbtn">
+        <span>크윗</span>
+      </div>
     </nav>
   );
 } 

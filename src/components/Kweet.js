@@ -35,10 +35,10 @@ const Kweet = (({kweetObj, isOwner}) => {
   }
 
   return (
-    <div className="kweet">
+    <div className="kweet-container">
       {editing ? (
         <>
-          <form onSubmit={onSubmit} className="container kweetEdit">
+          <form onSubmit={onSubmit} className="container kweet-edit">
             <input 
               placeholder="Edit your Kweet"
               value={newKweet} 
@@ -47,19 +47,30 @@ const Kweet = (({kweetObj, isOwner}) => {
               autoFocus
               className="formInput"
             />
-            <input type="submit" value="Update Kweet" className="formBtn"/>
+            <input type="submit" value="Update Kweet" className="kweet-updatebtn"/>
           </form>
           <button onClick={toggleEditing} className="formBtn cancelBtn">Cancel</button>
         </>
         ) : (
         <>
-          <h4>{kweetObj.text}</h4>
-          {kweetObj.attachmentUrl &&
-            <img alt="kweet img" src={kweetObj.attachmentUrl}/>
-          }
+          <div className="kweet-profile">
+            <img src={kweetObj.creatorImg} style={{width: "48px", height:"48px", borderRadius: "50%", display: "flex"}} />
+          </div>
+          <div className="kweet-body">
+            <div className="kweet-nametag">
+            <span style={{ fontSize: "16px", fontWeight:"bold"}}>{kweetObj.creatorName}</span>
+            <span style={{ fontSize: "12px", color: "#bbb"}}>@{kweetObj.creatorId}</span>
+            </div>
+            <h4>{kweetObj.text}</h4>
+            {kweetObj.attachmentUrl &&
+              <a href={kweetObj.attachmentUrl} target="_blank">
+                <img alt="kweet img" src={kweetObj.attachmentUrl}/>
+              </a>
+            }
+          </div>
           {isOwner && 
           <>
-            <div class="kweet__actions">
+            <div class="kweet-actions">
               <span onClick={onDeleteClick}>
                 <FontAwesomeIcon icon={faTrash} />
               </span>

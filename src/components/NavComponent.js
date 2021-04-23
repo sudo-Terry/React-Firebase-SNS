@@ -30,8 +30,10 @@ function NavComponent({icon, iconName}) {
       className="navcomp-container"
     >
       <div className="navcomp-wrapper" style={{ transition: "0.2s", backgroundColor: `${backgroundColor}`}}>
-        <FontAwesomeIcon className="navcomp-icons" icon={icon} color={iconColor} size="2x" />
-        <span style={{ transition: "0.2s", color: `${textColor} `}}>{iconName}</span>
+        <FontAwesomeIcon className="navcomp-icons" icon={icon} color={iconColor} size="2x" fixedWidth />
+        <span className="navcomp-namewrapper" style={{ transition: "0.2s", color: `${textColor} `}}>
+          {iconName}
+        </span>
       </div>
     </div>
   );

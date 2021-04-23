@@ -5,6 +5,7 @@
 .myprof-container {
   display: flex;
   flex-direction: column;
+  overflow: auto;
 }
 
 .myprof-header {
@@ -43,6 +44,11 @@
   object-fit: cover;
 }
 
+.myprof-backimg:hover {
+  filter: brightness(70%);
+  transition-duration: 0.2s;
+}
+
 .myprof-profimg {
   width: 140px;
   height: 140px;
@@ -53,6 +59,11 @@
   position: absolute;
   top: 130px;
   left: 15px;
+}
+
+.myprof-profimg:hover {
+  filter: brightness(70%);
+  transition-duration: 0.2s;
 }
 
 .myprof-kweets {

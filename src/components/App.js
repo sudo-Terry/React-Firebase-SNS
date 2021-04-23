@@ -34,7 +34,11 @@ function App() {
 
   return (
     <>
-      { init ? <AppRouter refreshUser={refreshUser} isLoggedIn={Boolean(userObj)} userObj={userObj} /> : "Initializing..."}
+      { init ? (
+        <AppRouter refreshUser={refreshUser} isLoggedIn={Boolean(userObj)} userObj={userObj} />
+        ) : (
+          "initializing..."
+      )}
       {/* <footer>&copy; {new Date().getFullYear()} Kwitter</footer> */}
     </>
   );
