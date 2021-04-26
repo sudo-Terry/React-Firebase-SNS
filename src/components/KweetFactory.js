@@ -7,6 +7,7 @@ import { faImage, faTimes, faGlobeAmericas } from "@fortawesome/free-solid-svg-i
 function KweetFactory({userObj}) {
   const [kweet, setKweet] = useState("");
   const [attachment, setAttachment] = useState("");
+  const [backgroundColor, setBackgroundColor] = useState("white")
 
   const onSubmit = async (event) => {
     if (kweet === "") {
@@ -58,6 +59,13 @@ function KweetFactory({userObj}) {
     setAttachment("");
   };
 
+  const onMouseOver = (event) => {
+    setBackgroundColor("#04abff49");
+  }
+
+  const onMouseLeave = (event) => {
+    setBackgroundColor("white");
+  }
 
   return (
     <form onSubmit={onSubmit} className="factory-form">
@@ -100,9 +108,14 @@ function KweetFactory({userObj}) {
             </span>
           </div>
           <div className="factory-footer">
-            <div className="factory-iconset">
+            <div className="factory-iconset"
+              onMouseOver={onMouseOver} 
+              onMouseLeave={onMouseLeave} 
+            >
               <label for="factory-attach-file" className="factory-imglabel">
-                <FontAwesomeIcon icon={faImage} size="2x" />
+                <div className="factory-iconwrap" style={{ transition: "0.2s", backgroundColor: `${backgroundColor}`}}>
+                  <FontAwesomeIcon icon={faImage} size="lg" />
+                </div>
               </label>
               <input 
                 id="factory-attach-file" 

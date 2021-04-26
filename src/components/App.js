@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import AppRouter from 'components/Router';
 import {authService} from 'myBase';
+import Loader from "react-loader-spinner";
+
 
 function App() {
   const [init, setInit] = useState(false);
@@ -37,7 +39,15 @@ function App() {
       { init ? (
         <AppRouter refreshUser={refreshUser} isLoggedIn={Boolean(userObj)} userObj={userObj} />
         ) : (
-          "initializing..."
+          <div className="app-loaderbox">
+            <Loader
+              type="Oval"
+              color="#3d66ba"
+              height={100}
+              width={100}
+              timeout={3000} //3 secs
+            />
+          </div>
       )}
       {/* <footer>&copy; {new Date().getFullYear()} Kwitter</footer> */}
     </>

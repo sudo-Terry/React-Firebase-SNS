@@ -3,9 +3,11 @@ import { dbService, storageService } from 'myBase';
 import Kweet from 'components/Kweet';
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Loader from "react-loader-spinner";
 
 function MyProfile({userObj}) {
   const [myKweets, setMyKweets] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [userBackGround, setUserBackGround] = useState("")
 
   useEffect(() => {
@@ -22,10 +24,12 @@ function MyProfile({userObj}) {
   };
 
   const getUserBackGround = async () => {
+    setIsLoading(true);
     let userBackGroundUrl = ""
     const spaceRef = storageService.ref().child(`userBackGround/${userObj.uid}`);
     userBackGroundUrl = await spaceRef.getDownloadURL();
     setUserBackGround(userBackGroundUrl);
+    setIsLoading(false);
   }
   
   return (
@@ -39,9 +43,21 @@ function MyProfile({userObj}) {
       <div className="myprof-body">
         <div className="myprof-bodytop">
           <div className="myprof-backimg">
-            <a href={userBackGround} target="_blank">
-              <img src={userBackGround} draggable/>
-            </a>
+            {isLoading ? (
+              <div className="myprof-backloadbox">
+                <Loader
+                  type="Oval"
+                  color="#3d66ba"
+                  height={50}
+                  width={50}
+                  timeout={3000} //3 secs
+                />
+              </div>
+            ) : (
+              <a href={userBackGround} target="_blank">
+                <img src={userBackGround} draggable/>
+              </a>
+            )}
           </div>
           <a href={userObj.photoURL} target="_blank">
             <img src={userObj.photoURL} className="myprof-profimg" />

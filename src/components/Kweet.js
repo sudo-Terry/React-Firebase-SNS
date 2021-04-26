@@ -8,7 +8,7 @@ const Kweet = (({kweetObj, isOwner}) => {
   const [newKweet, setNewKweet] = useState(kweetObj.text);
   
   const onDeleteClick = async () => {
-    const ok = window.confirm("Are you sure to delete kweet?");
+    const ok = window.confirm("정말로 크윗을 삭제하시겠습니까?");
     if(ok){
       await dbService.doc(`kweets/${kweetObj.id}`).delete();
       if(kweetObj.attachmentUrl !== "" ){
@@ -58,10 +58,10 @@ const Kweet = (({kweetObj, isOwner}) => {
           </div>
           <div className="kweet-body">
             <div className="kweet-nametag">
-            <span style={{ fontSize: "16px", fontWeight:"bold"}}>{kweetObj.creatorName}</span>
-            <span style={{ fontSize: "12px", color: "#bbb"}}>@{kweetObj.creatorId}</span>
+            <span className="kweet-username">{kweetObj.creatorName}</span>
+            <span className="kweet-userid">@{kweetObj.creatorId}</span>
             </div>
-            <h4>{kweetObj.text}</h4>
+            <p>{kweetObj.text}</p>
             {kweetObj.attachmentUrl &&
               <a href={kweetObj.attachmentUrl} target="_blank">
                 <img alt="kweet img" src={kweetObj.attachmentUrl}/>

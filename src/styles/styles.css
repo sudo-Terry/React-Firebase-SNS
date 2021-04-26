@@ -83,6 +83,13 @@ ul {
   border-bottom: 1px solid #ddd;
 }
 
+.app-loaderbox {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Navigation */
 /* ======================================================================== */
 /* ======================================================================== */
@@ -266,13 +273,18 @@ ul {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-left: 5px;
+  margin-left: 10px;
   margin-top: 12px;
 }
 
 .factory-iconset {
   display: flex;
   justify-content: center;
+}
+
+.factory-iconwrap {
+  border-radius: 9999px;
+  padding: 8px;
 }
 
 .factory-iconset input {
@@ -348,12 +360,19 @@ ul {
   cursor: pointer;
 }
 
-.kweet-nametag span {
+.kweet-username {
   cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+.kweet-username:hover {
+  text-decoration: underline;
 }
 
-.kweet-nametag span:hover {
-  text-decoration: underline;
+.kweet-userid {
+  font-size: 12px;
+  color: #bbb;
+  margin-left: 5px;
 }
 
 .kweet-profile img:hover {
@@ -361,7 +380,7 @@ ul {
   transition-duration: 0.2s;
 }
 
-.kweet h4 {
+.kweet p {
   font-size: 14px;
 }
 
@@ -397,22 +416,24 @@ ul {
 /* ======================================================================== */
 /* ======================================================================== */
 
-.authContainer {
+.auth-container {
   display: flex;
   flex-direction: column;
+  width: 400px;
   height: 100vh;
   justify-content: center;
   align-items: center;
 }
 
-.authBtns {
+.auth-btns {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   max-width: 320px;
 }
 
-.authBtn {
+.auth-btn {
   cursor: pointer;
   border-radius: 20px;
   border: none;
@@ -420,25 +441,36 @@ ul {
   font-size: 12px;
   text-align: center;
   width: 150px;
-  background: white;
+  background-color: #ddd;
+}
+
+.auth-btn:hover {
+  background-color: #bbb;
 }
 
 /* AuthForm */
 /* ======================================================================== */
 /* ======================================================================== */
 
-.authInput {
+.authform-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.authform-input {
+  display: block;
   max-width: 320px;
   width: 100%;
   padding: 10px;
   border-radius: 30px;
   margin-bottom: 10px;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: #ddd;
   font-size: 12px;
   color: black;
 }
 
-.authSubmit {
+.authform-submit {
   text-align: center;
   background: #04aaff;
   color: white;
@@ -446,18 +478,28 @@ ul {
   cursor: pointer;
 }
 
-.authError {
+.authform-submit:hover {
+  background-color: #0e8ac9;
+  transition-duration: 0.2s;
+}
+
+.authform-error {
   color: tomato;
   text-align: center;
   font-weight: 500;
   font-size: 12px;
 }
-.authSwitch {
+
+.authform-switch {
   color: #04aaff;
   cursor: pointer;
   margin-bottom: 10px;
   margin-top: 10px;
   display: block;
-  font-size: 12px;
+  font-size: 14px;
+}
+
+.authform-switch:hover {
+  color: #0e8ac9;
   text-decoration: underline;
 }

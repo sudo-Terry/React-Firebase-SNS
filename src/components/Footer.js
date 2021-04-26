@@ -4,22 +4,20 @@ import React from 'react';
 
 function Footer(props) {
   return (
-    <div className="foot" style={{width: "350px"}}>
-      <div className="footer" style={{ height: "100%", backgroundColor: "#888",  marginLeft: "30px"}}>
-      <FontAwesomeIcon icon={faSearch} color={"black"} size="2x" />
+    <div className="footer-container">
+      <div className="footer-searchbox">
+      <FontAwesomeIcon icon={faSearch} color={"#888"} size="lg" />
         <input 
           type="text" 
           placeholder="크위터 검색"
-          className="KwitterSearch"
-          style = {{
-            width: "100%",
-            backgroundColor: "#ddd"
-          }}
+          className="footer-search"
         />
-        <h2>
-          내가 좋아할만한 컨텐츠
-        </h2>
       </div>
+      <div className="footer-contentbox">
+        <div className="footer-contenttitle">
+          <span>내가 좋아할만한 컨텐츠</span>
+        </div> 
+      </div>  
     </div>
   );
 }

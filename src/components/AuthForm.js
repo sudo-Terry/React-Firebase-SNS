@@ -37,7 +37,7 @@ function AuthForm(props) {
 
   return (
     <>
-      <form onSubmit={onSubmit} className="container">
+      <form onSubmit={onSubmit} className="authform-container">
         <input 
           type="email"
           placeholder="Email"
@@ -45,7 +45,7 @@ function AuthForm(props) {
           name="email" 
           required 
           onChange={onChange}
-          className="authInput"
+          className="authform-input"
         />
         <input 
           type="password" 
@@ -54,12 +54,12 @@ function AuthForm(props) {
           name="password"
           required 
           onChange={onChange}
-          className="authInput"
+          className="authform-input"
         />
-        <input type="submit" value={newAccount ? "Create Account" : "Sign In"} className="authInput authSubmit" />
-        {error && <span className="authError">{error}</span>}
+        <input type="submit" value={newAccount ? "Create Account" : "Sign In"} className="authform-input authform-submit" />
+        {error && <span className="authform-error">{error}</span>}
       </form>
-      <span onClick={toggleAccount} className="authSwitch">{newAccount ? "Sign In" : "Create Account"}</span>
+      <span onClick={toggleAccount} className="authform-switch">{newAccount ? "Sign In" : "Create Account"}</span>
     </>
   );
 }
