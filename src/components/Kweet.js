@@ -1,7 +1,8 @@
 import { dbService, storageService } from 'myBase';
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faPencilAlt, faRetweet } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as farHeart, faComment as farComment } from '@fortawesome/free-regular-svg-icons'
 
 const Kweet = (({kweetObj, isOwner}) => {
   const [editing, setEditing] = useState(false);
@@ -53,24 +54,24 @@ const Kweet = (({kweetObj, isOwner}) => {
         </>
         ) : (
         <>
-          <div className="kweet-profile">
-            <img src={kweetObj.creatorImg} style={{width: "48px", height:"48px", borderRadius: "50%", display: "flex"}} />
-          </div>
-          <div className="kweet-body">
-            <div className="kweet-nametag">
-            <span className="kweet-username">{kweetObj.creatorName}</span>
-            <span className="kweet-userid">@{kweetObj.creatorId}</span>
+          <div className="kweet-header">
+            <div className="kweet-profile">
+              <img src={kweetObj.creatorImg} alt="profile" style={{width: "48px", height:"48px", borderRadius: "50%", display: "flex"}} />
             </div>
-            <p>{kweetObj.text}</p>
-            {kweetObj.attachmentUrl &&
-              <a href={kweetObj.attachmentUrl} target="_blank">
-                <img alt="kweet img" src={kweetObj.attachmentUrl}/>
-              </a>
-            }
-          </div>
-          {isOwner && 
-          <>
-            <div class="kweet-actions">
+            <div className="kweet-body">
+              <div className="kweet-nametag">
+              <span className="kweet-username">{kweetObj.creatorName}</span>
+              <span className="kweet-userid">@{kweetObj.creatorId}</span>
+              </div>
+              <p>{kweetObj.text}</p>
+              {kweetObj.attachmentUrl &&
+                <a href={kweetObj.attachmentUrl} rel="noopener noreferrer" target="_blank">
+                  <img alt="kweet img" src={kweetObj.attachmentUrl}/>
+                </a>
+              }
+            </div>
+            {isOwner && 
+            <div className="kweet-actions">
               <span onClick={onDeleteClick}>
                 <FontAwesomeIcon icon={faTrash} />
               </span>
@@ -78,7 +79,19 @@ const Kweet = (({kweetObj, isOwner}) => {
                 <FontAwesomeIcon icon={faPencilAlt} />
               </span>
             </div>
-          </>}
+            }
+          </div>
+          <div className="kweet-footer">
+            <span className="kweet-footiconwrap">
+              <FontAwesomeIcon icon={farComment} />
+            </span>
+            <span className="kweet-footiconwrap">
+              <FontAwesomeIcon icon={faRetweet} />
+            </span>
+            <span className="kweet-footiconwrap">
+              <FontAwesomeIcon icon={farHeart} />
+            </span>
+          </div>
         </>
       )}
     </div>

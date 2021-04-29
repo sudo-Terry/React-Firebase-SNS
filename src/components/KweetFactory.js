@@ -28,7 +28,7 @@ function KweetFactory({userObj}) {
       creatorImg: userObj.photoURL,
       attachmentUrl,
     };
-    dbService.collection("kweets").add(kweetObj);
+    await dbService.collection("kweets").add(kweetObj);
     setKweet("");
     setAttachment("");
   };
@@ -71,7 +71,7 @@ function KweetFactory({userObj}) {
     <form onSubmit={onSubmit} className="factory-form">
       <div className="factory-container">
         <span className="factory-profile">
-          <img src={userObj.photoURL} className="factory-profimg" />
+          <img src={userObj.photoURL} alt="profile" className="factory-profimg" />
         </span>
         <span className="factory-kweet">
           <div className="factory-inputbox">
@@ -103,7 +103,7 @@ function KweetFactory({userObj}) {
           </div>
           <div className="factory-kweetset">
             <span className="factory-kweetsetbtn">
-              <FontAwesomeIcon icon={faGlobeAmericas} size="x" color="#04aaff" />
+              <FontAwesomeIcon icon={faGlobeAmericas} size="lg" color="#04aaff" />
               &nbsp;&nbsp;모든 사람이 답글을 달 수 있습니다
             </span>
           </div>
@@ -112,7 +112,7 @@ function KweetFactory({userObj}) {
               onMouseOver={onMouseOver} 
               onMouseLeave={onMouseLeave} 
             >
-              <label for="factory-attach-file" className="factory-imglabel">
+              <label htmlFor="factory-attach-file" className="factory-imglabel">
                 <div className="factory-iconwrap" style={{ transition: "0.2s", backgroundColor: `${backgroundColor}`}}>
                   <FontAwesomeIcon icon={faImage} size="lg" />
                 </div>

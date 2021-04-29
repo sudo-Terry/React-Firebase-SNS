@@ -1,4 +1,4 @@
-import { authService, storageService } from 'myBase';
+import { authService, storageService, dbService } from 'myBase';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -43,11 +43,20 @@ const Profile = ({ refreshUser, userObj }) => {
     const response = await fileRef.putString(userBackGround, "data_url");
     userBackGroundUrl = await response.ref.getDownloadURL();
     setUserBackGround(userBackGroundUrl);
+    refreshUser();
+    
+    await dbService.collection("users").doc(`${userObj.uid}`).set({
+      uid: userObj.uid,
+      displayName: userObj.displayName,
+      photoURL: userObj.photoURL,
+    }).then(() => {
+      console.log("Document successfully written!");
+    })
+    .catch((error) => {
+      console.error("Error writing document: ", error);
+    });
+    console.log("added");
   };
-
-  useEffect (() => {
-    getUserBackGround();
-  }, []);
 
   const getUserBackGround = async () => {
     let userBackGroundUrl = ""
@@ -55,6 +64,10 @@ const Profile = ({ refreshUser, userObj }) => {
     userBackGroundUrl = await spaceRef.getDownloadURL();
     setUserBackGround(userBackGroundUrl);
   }
+
+  useEffect (() => {
+    getUserBackGround();
+  }, []);
 
   const onFileChange = (event) => {
     const {
@@ -90,7 +103,7 @@ const Profile = ({ refreshUser, userObj }) => {
   return (
     <div className="container">
       <form onSubmit={onSubmit}  className="profileForm"> 
-        <label for="backGroundImg-file">
+        <label htmlFor="backGroundImg-file">
           <img src={userBackGround} alt="backGroundImg" style={{width: "99%", height: "200px", overflow: "hidden", objectFit: "cover"}} />
         </label>
         <input 
@@ -102,7 +115,7 @@ const Profile = ({ refreshUser, userObj }) => {
             opacity: 0,
           }}
         />
-        <label for="userImg-file">
+        <label htmlFor="userImg-file">
           <img src={userImg} alt="profileImg" style={{width: "50px", height: "50px", overflow: "hidden", objectFit: "cover"}} />
         </label>
         <input 

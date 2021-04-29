@@ -344,11 +344,17 @@ ul {
   padding: 20px;
   padding-top: 10px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   position: relative;
   background-color: white;
   color: rgba(0, 0, 0, 0.8);
   border-bottom: 1px solid #ddd;
+}
+
+.kweet-container:hover {
+  cursor: pointer;
+  filter: brightness(95%);
+  transition-duration: 0.2s;
 }
 
 .kweet-profile {
@@ -410,6 +416,37 @@ ul {
 
 .kweet-actions span:first-child {
   margin-right: 10px;
+}
+
+.kweet-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.kweet-footer {
+  width: 100%;
+  margin-top: 10px;
+  margin-left: 63px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kweet-footiconwrap {
+  margin-right: 150px;
+}
+
+.kweet-footiconwrap span {
+  color: #777;
+  cursor: pointer;
+  border-radius: 9999px;
+  padding: 5px;
+}
+
+.kweet-footiconwrap span:hover {
+  transition-duration: 0.2s;
+  background-color: #04abff49;
 }
 
 /* Auth */

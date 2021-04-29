@@ -19,7 +19,7 @@ const Home = ({userObj}) => {
   return (
     <div className="container" style={{ overflow: "auto" }}>
        <div className="header Home_header" style={{ width: "100%", height: "53px", display: "flex" ,justifyContent: "flex-start", alignItems:"center"}}>
-        <span style={{ fontSize: "20px", fontWeight: "bold", margin: "10px" }}>
+        <span style={{ fontSize: "20px", fontWeight: "bold", margin: "10px", marginLeft: "16px" }}>
           홈
         </span>
       </div>

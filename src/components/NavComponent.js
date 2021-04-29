@@ -5,22 +5,17 @@ function NavComponent({icon, iconName}) {
   const [iconColor, setIconColor] = useState("#777");
   const [textColor, setTextColor] = useState("black");
   const [backgroundColor, setBackgroundColor] = useState("white")
-  const [selected, setSelected] = useState(false);
 
   const onMouseOver = (event) => {
-    if(!selected){
-      setIconColor("#04aaff");
-      setTextColor("#04aaff");
-      setBackgroundColor("#04abff49");
-    }
+    setIconColor("#04aaff");
+    setTextColor("#04aaff");
+    setBackgroundColor("#04abff49");
   }
 
   const onMouseLeave = (event) => {
-    if(!selected){
-      setIconColor("#777");
-      setTextColor("black");
-      setBackgroundColor("white");
-    }
+    setIconColor("#777");
+    setTextColor("black");
+    setBackgroundColor("white");
   }
 
   return (

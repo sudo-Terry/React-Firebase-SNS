@@ -54,13 +54,13 @@ function MyProfile({userObj}) {
                 />
               </div>
             ) : (
-              <a href={userBackGround} target="_blank">
-                <img src={userBackGround} draggable/>
+              <a href={userBackGround} rel="noopener noreferrer" target="_blank">
+                <img src={userBackGround} alt="background" draggable/>
               </a>
             )}
           </div>
-          <a href={userObj.photoURL} target="_blank">
-            <img src={userObj.photoURL} className="myprof-profimg" />
+          <a href={userObj.photoURL} rel="noopener noreferrer" target="_blank">
+            <img src={userObj.photoURL} alt="profile" className="myprof-profimg" />
           </a>
           <div className="myprof-prof">
               <div className="myprof-editprof">
@@ -78,7 +78,7 @@ function MyProfile({userObj}) {
         </div>
       </div>
       <div className="myprof-kweets">
-        {myKweets.map((kweet) => (
+        {myKweets.slice(0).reverse().map((kweet) => (
           <Kweet key={kweet.id} kweetObj={kweet} isOwner={true}/>
         ))}
       </div>

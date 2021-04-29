@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import AppRouter from 'components/Router';
-import {authService} from 'myBase';
+import { authService } from 'myBase';
 import Loader from "react-loader-spinner";
 
 
@@ -49,7 +49,6 @@ function App() {
             />
           </div>
       )}
-      {/* <footer>&copy; {new Date().getFullYear()} Kwitter</footer> */}
     </>
   );
 }
