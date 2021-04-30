@@ -24,8 +24,6 @@ function KweetFactory({userObj}) {
       text: kweet,
       createdAt: Date.now(),
       creatorId: userObj.uid,
-      creatorName: userObj.displayName,
-      creatorImg: userObj.photoURL,
       attachmentUrl,
     };
     await dbService.collection("kweets").add(kweetObj);

@@ -20,7 +20,7 @@ function Navigation ({userObj}) {
           <NavComponent icon={faTwitter} iconName={"홈"} />
         </li>
         </Link>
-        <Link to="/myprofile" >
+        <Link to={`/${userObj.uid}`} >
           <li>
            <NavComponent icon={farUser} iconName={"프로필"} />
           </li>
@@ -40,7 +40,7 @@ function Navigation ({userObj}) {
         <li>
           <NavComponent icon={farListAlt} iconName={"리스트"} />
         </li>
-        <Link to="/profile" >
+        <Link to="/editprofile" >
         <li>
           <NavComponent icon={faEllipsisH} iconName={"더 보기"} />
         </li>

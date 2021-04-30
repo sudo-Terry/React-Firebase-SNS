@@ -1,154 +1,89 @@
-import { authService, storageService, dbService } from 'myBase';
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { dbService, storageService } from 'myBase';
+import Kweet from 'components/Kweet';
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Loader from "react-loader-spinner";
 
-const Profile = ({ refreshUser, userObj }) => {
-  const history = useHistory();
-  const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
-  const [userImg, setUserImg] = useState(userObj.photoURL);
+function Profile({userObj}) {
+  const [myKweets, setMyKweets] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [userBackGround, setUserBackGround] = useState("")
 
-  const onLogOutClick = () => {
-    authService.signOut();
-    history.push("/");
-  };  
+  useEffect(() => {
+    getMyKweets();
+    getUserBackGround();
+  }, []);
 
-  const onChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setNewDisplayName(value);
-  }
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    if (userObj.displayName !== newDisplayName) {
-      await userObj.updateProfile({
-        displayName: newDisplayName,
-      });
-      refreshUser();
-    }
-    let userImgUrl = ""
-    if(userObj.photoURL !== userImg){
-      const fileRef = storageService.ref().child(`userImg/${userObj.uid}`);
-      const response = await fileRef.putString(userImg, "data_url");
-      userImgUrl = await response.ref.getDownloadURL();
-      await userObj.updateProfile({ 
-        photoURL: userImgUrl,
-      });
-      refreshUser();
-    }
-    let userBackGroundUrl = ""
-    const fileRef = storageService.ref().child(`userBackGround/${userObj.uid}`);
-    const response = await fileRef.putString(userBackGround, "data_url");
-    userBackGroundUrl = await response.ref.getDownloadURL();
-    setUserBackGround(userBackGroundUrl);
-    refreshUser();
-    
-    await dbService.collection("users").doc(`${userObj.uid}`).set({
-      uid: userObj.uid,
-      displayName: userObj.displayName,
-      photoURL: userObj.photoURL,
-    }).then(() => {
-      console.log("Document successfully written!");
-    })
-    .catch((error) => {
-      console.error("Error writing document: ", error);
-    });
-    console.log("added");
+  const getMyKweets = async () => {
+    const kweets = await dbService.collection("kweets").where("creatorId", "==", userObj.uid).orderBy("createdAt").get();
+    setMyKweets(kweets.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    })));
   };
 
   const getUserBackGround = async () => {
+    setIsLoading(true);
     let userBackGroundUrl = ""
     const spaceRef = storageService.ref().child(`userBackGround/${userObj.uid}`);
     userBackGroundUrl = await spaceRef.getDownloadURL();
     setUserBackGround(userBackGroundUrl);
+    setIsLoading(false);
   }
-
-  useEffect (() => {
-    getUserBackGround();
-  }, []);
-
-  const onFileChange = (event) => {
-    const {
-      target: {files},
-    } = event;
-    const theFile = files[0];
-    const reader = new FileReader();
-    reader.onloadend = (finishedEvent) => {
-      const {
-        currentTarget: {result},
-      } = finishedEvent;
-      setUserImg(result);
-    };
-    reader.readAsDataURL(theFile);
-  };
-
-  const onBackChange = (event) => {
-    const {
-      target: {files},
-    } = event;
-    const theFile = files[0];
-    const reader = new FileReader();
-    reader.onloadend = (finishedEvent) => {
-      const {
-        currentTarget: {result},
-      } = finishedEvent;
-      setUserBackGround(result);
-    };
-    reader.readAsDataURL(theFile);
-  };
-
-
+  
   return (
-    <div className="container">
-      <form onSubmit={onSubmit}  className="profileForm"> 
-        <label htmlFor="backGroundImg-file">
-          <img src={userBackGround} alt="backGroundImg" style={{width: "99%", height: "200px", overflow: "hidden", objectFit: "cover"}} />
-        </label>
-        <input 
-          id="backGroundImg-file" 
-          type="file" 
-          accept="image/*" 
-          onChange={onBackChange} 
-          style={{
-            opacity: 0,
-          }}
-        />
-        <label htmlFor="userImg-file">
-          <img src={userImg} alt="profileImg" style={{width: "50px", height: "50px", overflow: "hidden", objectFit: "cover"}} />
-        </label>
-        <input 
-          id="userImg-file" 
-          type="file" 
-          accept="image/*" 
-          onChange={onFileChange} 
-          style={{
-            opacity: 0,
-          }}
-        />
-        <input 
-          onChange={onChange} 
-          autoFocus 
-          type="text" 
-          placeholder="Display Name" 
-          value={newDisplayName}
-          className="formInput" 
-        />
-        <input 
-          type="submit" 
-          value="Update Profile"  
-          className="formBtn"
-          style={{
-            marginTop: 10,
-          }} 
-        />
-      </form>
-      <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
-        Log Out
-      </span>
+    <div className="container myprof-container">
+      <div className="header myprof-header">
+        <FontAwesomeIcon icon={faArrowLeft} color={"#04aaff"} size="2x" style={{margin: "10px", cursor:"pointer"}} />
+        <span>
+          {userObj.displayName}
+        </span>
+      </div>
+      <div className="myprof-body">
+        <div className="myprof-bodytop">
+          <div className="myprof-backimg">
+            {isLoading ? (
+              <div className="myprof-backloadbox">
+                <Loader
+                  type="Oval"
+                  color="#3d66ba"
+                  height={50}
+                  width={50}
+                  timeout={3000} //3 secs
+                />
+              </div>
+            ) : (
+              <a href={userBackGround} rel="noopener noreferrer" target="_blank">
+                <img src={userBackGround} alt="background" draggable/>
+              </a>
+            )}
+          </div>
+          <a href={userObj.photoURL} rel="noopener noreferrer" target="_blank">
+            <img src={userObj.photoURL} alt="profile" className="myprof-profimg" />
+          </a>
+          <div className="myprof-prof">
+              <div className="myprof-editprof">
+                <span className="myprof-editprofbtn">
+                  프로필 수정
+                </span> 
+              </div>
+            <div className="myprof-username">
+              {userObj.displayName}
+              <div className="myprof-userid">
+                @{userObj.uid}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="myprof-kweets">
+        {myKweets.slice(0).reverse().map((kweet) => (
+          <Kweet key={kweet.id} kweetObj={kweet} isOwner={true}/>
+        ))}
+      </div>
     </div>
   );
-};
+}
 
 export default Profile;

@@ -4,6 +4,7 @@ function NoteComponent(props) {
   return (
     <div>
       
+      
     </div>
   );
 }

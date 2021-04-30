@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 import Auth from 'routes/Auth';
 import Home from 'routes/Home';
-import MyProfile from 'routes/MyProfile';
 import Profile from 'routes/Profile';
+import EditProfile from 'routes/EditProfile';
 import Footer from './Footer';
 import Navigation from './Navigation';
 
 const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
+  const [userIds, setUserIds] = useState([]);
+
+  const getAllUserId = async() => {
+    
+  };
+
   return(
     <Router>
       <div style={{display: "flex", justifyContent: "center" , alignItems:"stretch", margin: "0 auto"}}>
@@ -37,11 +43,11 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
                   <Route exact path="/">
                     <Home userObj={userObj}/>
                   </Route>
-                  <Route exact path="/profile">
-                    <Profile userObj={userObj} refreshUser={refreshUser}/>
+                  <Route exact path="/editprofile">
+                    <EditProfile userObj={userObj} refreshUser={refreshUser}/>
                   </Route>
-                  <Route exact path="/myprofile">
-                    <MyProfile userObj={userObj} />
+                  <Route exact path={`/${userObj.uid}`}>
+                    <Profile userObj={userObj} />
                   </Route>
                 </div>
               </div>  

@@ -1,12 +1,16 @@
 import { dbService, storageService } from 'myBase';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt, faRetweet } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart, faComment as farComment } from '@fortawesome/free-regular-svg-icons'
+import Loader from "react-loader-spinner";
 
 const Kweet = (({kweetObj, isOwner}) => {
   const [editing, setEditing] = useState(false);
   const [newKweet, setNewKweet] = useState(kweetObj.text);
+  const [creatorObj, setCreatorObj] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   
   const onDeleteClick = async () => {
     const ok = window.confirm("정말로 크윗을 삭제하시겠습니까?");
@@ -35,6 +39,28 @@ const Kweet = (({kweetObj, isOwner}) => {
     setNewKweet(value);
   }
 
+  const getCreatorInfo = async () => {
+    setIsLoading(true);
+    const creatorRef = await dbService.collection("users").doc(`${kweetObj.creatorId}`);
+    creatorRef.get().then(async (doc) => {
+      if (doc.exists) {
+          setCreatorObj({
+            ...doc.data(),
+          });
+      } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+      }
+    }).catch((error) => {
+      console.log("Error getting document:", error);
+    });
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    getCreatorInfo();
+  }, []);
+
   return (
     <div className="kweet-container">
       {editing ? (
@@ -55,13 +81,27 @@ const Kweet = (({kweetObj, isOwner}) => {
         ) : (
         <>
           <div className="kweet-header">
-            <div className="kweet-profile">
-              <img src={kweetObj.creatorImg} alt="profile" style={{width: "48px", height:"48px", borderRadius: "50%", display: "flex"}} />
-            </div>
+            {isLoading ? (
+                <Loader
+                  type="Oval"
+                  color="#3d66ba"
+                  height={50}
+                  width={50}
+                  timeout={3000} //3 secs
+                />
+            ) : (
+              <div className="kweet-profile">
+                <Link to={`/${creatorObj.uid}`} >
+                  <img src={creatorObj.photoURL} alt="profile" style={{width: "48px", height:"48px", borderRadius: "50%", display: "flex"}} />
+                </Link>
+              </div>
+            )}
             <div className="kweet-body">
               <div className="kweet-nametag">
-              <span className="kweet-username">{kweetObj.creatorName}</span>
-              <span className="kweet-userid">@{kweetObj.creatorId}</span>
+              <Link to={`/${creatorObj.uid}`} >
+                <span className="kweet-username">{creatorObj.displayName}</span>
+              </Link>
+              <span className="kweet-userid">@{creatorObj.uid}</span>
               </div>
               <p>{kweetObj.text}</p>
               {kweetObj.attachmentUrl &&
