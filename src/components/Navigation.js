@@ -1,6 +1,6 @@
 import React from 'react';
 import NavComponent from './NavComponent';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faEllipsisH, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faUser as farUser,
@@ -15,16 +15,16 @@ function Navigation ({userObj}) {
   return (
     <nav>
       <ul className="navlist">
-      <Link to="/" >
-        <li>
-          <NavComponent icon={faTwitter} iconName={"홈"} />
-        </li>
-        </Link>
-        <Link to={`/${userObj.uid}`} >
+        <NavLink to="/" exact={true} activeStyle={{ color: "#04aaff" }}>
+          <li>
+            <NavComponent icon={faTwitter} iconName={"홈"} />
+          </li>
+        </NavLink>
+        <NavLink to={`/profiles/${userObj.uid}`} exact={true} activeStyle={{ color: "#04aaff" }}>
           <li>
            <NavComponent icon={farUser} iconName={"프로필"} />
           </li>
-        </Link>
+        </NavLink>
         <li>
           <NavComponent icon={faSearch} iconName={"탐색하기"} />
         </li>
@@ -40,11 +40,11 @@ function Navigation ({userObj}) {
         <li>
           <NavComponent icon={farListAlt} iconName={"리스트"} />
         </li>
-        <Link to="/editprofile" >
+        <NavLink to="/editprofile"  exact={true} activeStyle={{ color: "#04aaff" }}>
         <li>
           <NavComponent icon={faEllipsisH} iconName={"더 보기"} />
         </li>
-        </Link>
+        </NavLink>
       </ul>
       <div className="nav-kweetbtn">
         <span>크윗</span>

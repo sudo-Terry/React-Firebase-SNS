@@ -98,10 +98,10 @@ const Kweet = (({kweetObj, isOwner}) => {
             )}
             <div className="kweet-body">
               <div className="kweet-nametag">
-              <Link to={`/${creatorObj.uid}`} >
-                <span className="kweet-username">{creatorObj.displayName}</span>
-              </Link>
-              <span className="kweet-userid">@{creatorObj.uid}</span>
+                <Link to={`/profiles/${creatorObj.uid}`} >
+                  <span className="kweet-username">{creatorObj.displayName}</span>
+                </Link>
+                <span className="kweet-userid">@{creatorObj.uid}</span>
               </div>
               <p>{kweetObj.text}</p>
               {kweetObj.attachmentUrl &&

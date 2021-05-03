@@ -10,13 +10,10 @@ function Profile({userObj}) {
   const [isLoading, setIsLoading] = useState(false);
   const [userBackGround, setUserBackGround] = useState("")
 
-  useEffect(() => {
-    getMyKweets();
-    getUserBackGround();
-  }, []);
-
   const getMyKweets = async () => {
-    const kweets = await dbService.collection("kweets").where("creatorId", "==", userObj.uid).orderBy("createdAt").get();
+    const kweets = await dbService.collection("kweets").where("creatorId", "==", userObj.uid)
+    .orderBy("createdAt").get();
+    console.log(kweets);
     setMyKweets(kweets.docs.map(doc => ({
       id: doc.id,
       ...doc.data(),
@@ -32,6 +29,11 @@ function Profile({userObj}) {
     setIsLoading(false);
   }
   
+  useEffect(() => {
+    getMyKweets();
+    getUserBackGround();
+  }, []);
+
   return (
     <div className="container myprof-container">
       <div className="header myprof-header">

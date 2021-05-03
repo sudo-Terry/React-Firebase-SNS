@@ -6,14 +6,9 @@ import Profile from 'routes/Profile';
 import EditProfile from 'routes/EditProfile';
 import Footer from './Footer';
 import Navigation from './Navigation';
+import OthersProfile from 'routes/OthersProfile';
 
 const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
-  const [userIds, setUserIds] = useState([]);
-
-  const getAllUserId = async() => {
-    
-  };
-
   return(
     <Router>
       <div style={{display: "flex", justifyContent: "center" , alignItems:"stretch", margin: "0 auto"}}>
@@ -46,9 +41,10 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
                   <Route exact path="/editprofile">
                     <EditProfile userObj={userObj} refreshUser={refreshUser}/>
                   </Route>
-                  <Route exact path={`/${userObj.uid}`}>
+                  <Route exact path={`/profiles/${userObj.uid}`}>
                     <Profile userObj={userObj} />
                   </Route>
+                  <Route path="/profiles/:userId" component={OthersProfile} />
                 </div>
               </div>  
             ) : (
