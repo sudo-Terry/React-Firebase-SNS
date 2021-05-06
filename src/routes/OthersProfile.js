@@ -5,35 +5,44 @@ import Loader from "react-loader-spinner";
 //============= 추후 Profile.js와 통합 ==============//
 
 function OthersProfile({ match }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [otherUserObj, setOtherUserObj] = useState({});
 
-  useEffect(() => {
+  const getUserInfo = async () => { //db에서 유저정보 가져오기
+    setIsLoading(true);
+    const { userId } = match.params;
+    try{
+      const docRef = await dbService.collection("users").doc(`${userId}`);
+      const docInfo = await docRef.get();
+      setOtherUserObj(docInfo.data());
+      console.log(otherUserObj);
+    } catch (err){
+      console.log({err});
+    }
+    setIsLoading(false);
+  }
+
+  useEffect(() => {  
     getUserInfo();
   }, []);
 
-  const getUserInfo = async () => { //db에서 유저정보 가져오기
-    const { userId } = match.params;
-    const userRef = await dbService.collection("users").doc(`${userId}`);
-    userRef.get().then(async (doc) => {
-      if (doc.exists) {
-          setOtherUserObj({
-            ...doc.data(),
-          });
-          console.log(otherUserObj);
-      } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
-      }
-    }).catch((error) => {
-      console.log("Error getting document:", error);
-    });
-  }
-
   return (
     <div>
-      <p>
-        tlqkf
-      </p>
+      { isLoading ? (
+        <div>
+          <Loader
+            type="Oval"
+            color="#3d66ba"
+            height={50}
+            width={50}
+            timeout={3000} //3 secs
+          />
+        </div>
+      ) : (
+        <div>
+          <Profile userObj={otherUserObj} />
+        </div>
+      )}
     </div>
   );
 

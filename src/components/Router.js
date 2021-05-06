@@ -41,9 +41,6 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
                   <Route exact path="/editprofile">
                     <EditProfile userObj={userObj} refreshUser={refreshUser}/>
                   </Route>
-                  <Route exact path={`/profiles/${userObj.uid}`}>
-                    <Profile userObj={userObj} />
-                  </Route>
                   <Route path="/profiles/:userId" component={OthersProfile} />
                 </div>
               </div>  
