@@ -9,7 +9,7 @@ function OthersProfile() {
   const [isLoading, setIsLoading] = useState(false);
   const [otherUserObj, setOtherUserObj] = useState({});
 
-  const getUserInfo = async () => { //db에서 유저정보 가져오기
+  const GetUserInfo = async () => { //db에서 유저정보 가져오기
     setIsLoading(true);
     const { userId } = useParams();
     try{
@@ -24,7 +24,7 @@ function OthersProfile() {
   }
 
   useEffect(() => {  
-    getUserInfo();
+    GetUserInfo();
   }, []);
 
   return (
