@@ -13,7 +13,6 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "firebase": "^8.4.1",
-    "gh-pages": "^3.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-loader-spinner": "^4.0.0",
@@ -37,8 +36,13 @@
       "react-app/jest"
     ]
   },
+  "homepage": "https://sudo-terry.github.io/kwitter",
+  "devDependencies": {
+    "gh-pages": "^3.1.0"
+  },
   "browserslist": {
     "production": [
+      ">0.2%",
       "not dead",
       "not op_mini all"
     ],
@@ -47,6 +51,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "homepage": "https://sudo-terry.github.io/kwitter"
+  }
 }
