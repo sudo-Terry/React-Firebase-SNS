@@ -6,8 +6,9 @@ const EditProfile = ({ refreshUser, userObj }) => {
   const history = useHistory();
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
   const [userImg, setUserImg] = useState(userObj.photoURL);
-  const [userBackGround, setUserBackGround] = useState("")
+  const [userBackGround, setUserBackGround] = useState("");
   const [toggleBack, setToggleBack] = useState(false);
+  const [bio, setBio] = useState("");
 
   const onLogOutClick = () => {
     authService.signOut();
@@ -21,6 +22,13 @@ const EditProfile = ({ refreshUser, userObj }) => {
     setNewDisplayName(value);
   }
 
+  const onBioChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setBio(value);
+  }
+
   const onSubmit = async (event) => {
     event.preventDefault();
     var user = authService.currentUser;
@@ -29,11 +37,10 @@ const EditProfile = ({ refreshUser, userObj }) => {
         displayName: newDisplayName,
       });
     }
-    let userImgUrl = ""
     if(userObj.photoURL !== userImg){
       const fileRef = storageService.ref().child(`userImg/${userObj.uid}`);
       const response = await fileRef.putString(userImg, "data_url");
-      userImgUrl = await response.ref.getDownloadURL();
+      const userImgUrl = await response.ref.getDownloadURL();
       await user.updateProfile({ 
         photoURL: userImgUrl,
       });
@@ -64,6 +71,10 @@ const EditProfile = ({ refreshUser, userObj }) => {
     const spaceRef = storageService.ref().child(`userBackGround/${userObj.uid}`);
     userBackGroundUrl = await spaceRef.getDownloadURL();
     setUserBackGround(userBackGroundUrl);
+  }
+
+  const getUserBio = async => {
+    const spaceRef = storageService.ref().child(`userBio/${userObj.uid}`);
   }
 
   useEffect (() => {
@@ -133,8 +144,15 @@ const EditProfile = ({ refreshUser, userObj }) => {
           onChange={onChange} 
           autoFocus 
           type="text" 
-          placeholder="Display Name" 
+          placeholder="Username" 
           value={newDisplayName}
+          className="formInput" 
+        />
+        <input 
+          onChange={onBioChange}
+          type="textarea" 
+          placeholder="bio" 
+          value={bio}
           className="formInput" 
         />
         <input 
