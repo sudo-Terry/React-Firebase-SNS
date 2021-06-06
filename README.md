@@ -25,7 +25,12 @@ Google Firebase 서비스를 이용하여 Server-Side를 구축하고, React를 
     yarn add
     
 ## 5. 로그
+
+## 6. 디버깅
+
+    -다른 유저 프로필 화면에서 좌측 메뉴의 버튼으로 내 프로필로 이동할 경우, url은 정상적으로 변경되나 화면은 그대로인 버그 확인
+    -
     
-## 6. 참고
+## 7. 참고
 이 프로젝트는 Nomad Coder님의 강의인 '트위터 클론코딩'을 기반으로 뼈대를 잡고 살을 붙여 개발한 프로젝트입니다.<br/>
 [강의 URL]: https://nomadcoders.co/nwitter/lobby
