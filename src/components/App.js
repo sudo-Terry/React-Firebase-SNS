@@ -3,7 +3,6 @@ import AppRouter from 'components/Router';
 import { authService } from 'myBase';
 import Loader from "react-loader-spinner";
 
-
 function App() {
   const [init, setInit] = useState(false);
   const [userObj, setUserObj] = useState(null);
