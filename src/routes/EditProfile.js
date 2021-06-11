@@ -1,6 +1,6 @@
-import { authService, storageService, dbService } from 'myBase';
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { authService, storageService, dbService } from "myBase";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const EditProfile = ({ refreshUser, userObj }) => {
   const history = useHistory();
@@ -13,23 +13,23 @@ const EditProfile = ({ refreshUser, userObj }) => {
   const onLogOutClick = () => {
     authService.signOut();
     history.push("/");
-  };  
+  };
 
-  const onChange = (event) => {
+  const onChange = event => {
     const {
       target: { value },
     } = event;
     setNewDisplayName(value);
-  }
+  };
 
-  const onBioChange = (event) => {
+  const onBioChange = event => {
     const {
       target: { value },
     } = event;
     setBio(value);
-  }
+  };
 
-  const onSubmit = async (event) => {
+  const onSubmit = async event => {
     event.preventDefault();
     var user = authService.currentUser;
     if (userObj.displayName !== newDisplayName) {
@@ -37,74 +37,81 @@ const EditProfile = ({ refreshUser, userObj }) => {
         displayName: newDisplayName,
       });
     }
-    if(userObj.photoURL !== userImg){
+    if (userObj.photoURL !== userImg) {
       const fileRef = storageService.ref().child(`userImg/${userObj.uid}`);
       const response = await fileRef.putString(userImg, "data_url");
       const userImgUrl = await response.ref.getDownloadURL();
-      await user.updateProfile({ 
+      await user.updateProfile({
         photoURL: userImgUrl,
       });
     }
-    if(toggleBack){
-      const fileRef = storageService.ref().child(`userBackGround/${userObj.uid}`);
+    if (toggleBack) {
+      const fileRef = storageService
+        .ref()
+        .child(`userBackGround/${userObj.uid}`);
       const response = await fileRef.putString(userBackGround, "data_url");
       const userBackGroundUrl = await response.ref.getDownloadURL();
       setUserBackGround(userBackGroundUrl);
       setToggleBack(false);
     }
     refreshUser();
-    await dbService.collection("users").doc(`${userObj.uid}`).set({
-      uid: user.uid,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-    }).then(() => {
-      console.log("Document successfully written!");
-    })
-    .catch((error) => {
-      console.error("Error writing document: ", error);
-    });
-    
+    await dbService
+      .collection("users")
+      .doc(`${userObj.uid}`)
+      .set({
+        uid: user.uid,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+      })
+      .then(() => {
+        console.log("Document successfully written!");
+      })
+      .catch(error => {
+        console.error("Error writing document: ", error);
+      });
   };
 
   const getUserBackGround = async () => {
-    let userBackGroundUrl = ""
-    const spaceRef = storageService.ref().child(`userBackGround/${userObj.uid}`);
+    let userBackGroundUrl = "";
+    const spaceRef = storageService
+      .ref()
+      .child(`userBackGround/${userObj.uid}`);
     userBackGroundUrl = await spaceRef.getDownloadURL();
     setUserBackGround(userBackGroundUrl);
-  }
+  };
 
   const getUserBio = async => {
     const spaceRef = storageService.ref().child(`userBio/${userObj.uid}`);
-  }
+  };
 
-  useEffect (() => {
+  useEffect(() => {
     getUserBackGround();
   }, []);
 
-  const onFileChange = (event) => {
+  const onFileChange = event => {
     const {
-      target: {files},
+      target: { files },
     } = event;
     const theFile = files[0];
     const reader = new FileReader();
-    reader.onloadend = (finishedEvent) => {
+    reader.onloadend = finishedEvent => {
       const {
-        currentTarget: {result},
+        currentTarget: { result },
       } = finishedEvent;
       setUserImg(result);
     };
     reader.readAsDataURL(theFile);
   };
 
-  const onBackChange = (event) => {
+  const onBackChange = event => {
     const {
-      target: {files},
+      target: { files },
     } = event;
     const theFile = files[0];
     const reader = new FileReader();
-    reader.onloadend = (finishedEvent) => {
+    reader.onloadend = finishedEvent => {
       const {
-        currentTarget: {result},
+        currentTarget: { result },
       } = finishedEvent;
       setUserBackGround(result);
     };
@@ -112,56 +119,73 @@ const EditProfile = ({ refreshUser, userObj }) => {
     setToggleBack(true);
   };
 
-
   return (
     <div className="container">
-      <form onSubmit={onSubmit}  className="profileForm"> 
+      <form onSubmit={onSubmit} className="profileForm">
         <label htmlFor="backGroundImg-file">
-          <img src={userBackGround} alt="backGroundImg" style={{width: "99%", height: "200px", overflow: "hidden", objectFit: "cover"}} />
+          <img
+            src={userBackGround}
+            alt="backGroundImg"
+            style={{
+              width: "99%",
+              height: "200px",
+              overflow: "hidden",
+              objectFit: "cover",
+            }}
+          />
         </label>
-        <input 
-          id="backGroundImg-file" 
-          type="file" 
-          accept="image/*" 
-          onChange={onBackChange} 
+        <input
+          id="backGroundImg-file"
+          type="file"
+          accept="image/*"
+          onChange={onBackChange}
           style={{
             opacity: 0,
           }}
         />
         <label htmlFor="userImg-file">
-          <img src={userImg} alt="profileImg" style={{width: "50px", height: "50px", overflow: "hidden", objectFit: "cover"}} />
+          <img
+            src={userImg}
+            alt="profileImg"
+            style={{
+              width: "50px",
+              height: "50px",
+              overflow: "hidden",
+              objectFit: "cover",
+            }}
+          />
         </label>
-        <input 
-          id="userImg-file" 
-          type="file" 
-          accept="image/*" 
-          onChange={onFileChange} 
+        <input
+          id="userImg-file"
+          type="file"
+          accept="image/*"
+          onChange={onFileChange}
           style={{
             opacity: 0,
           }}
         />
-        <input 
-          onChange={onChange} 
-          autoFocus 
-          type="text" 
-          placeholder="Username" 
+        <input
+          onChange={onChange}
+          autoFocus
+          type="text"
+          placeholder="Username"
           value={newDisplayName}
-          className="formInput" 
+          className="formInput"
         />
-        <input 
+        <input
           onChange={onBioChange}
-          type="textarea" 
-          placeholder="bio" 
+          type="textarea"
+          placeholder="bio"
           value={bio}
-          className="formInput" 
+          className="formInput"
         />
-        <input 
-          type="submit" 
-          value="Update Profile"  
+        <input
+          type="submit"
+          value="Update Profile"
           className="formBtn"
           style={{
             marginTop: 10,
-          }} 
+          }}
         />
       </form>
       <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
