@@ -1,60 +1,71 @@
-import React, { useState } from 'react';
-import {HashRouter as Router, Route, Switch} from 'react-router-dom';
-import Auth from 'routes/Auth';
-import Home from 'routes/Home';
-import Profile from 'routes/Profile';
-import EditProfile from 'routes/EditProfile';
-import Footer from './Footer';
-import Navigation from './Navigation';
-import OthersProfile from 'routes/OthersProfile';
+import React, { useState } from "react";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import Auth from "routes/Auth";
+import Home from "routes/Home";
+import EditProfile from "routes/EditProfile";
+import Footer from "./Footer";
+import Navigation from "./Navigation";
+import OthersProfile from "routes/OthersProfile";
+import styled from "styled-components";
+
+const RouterContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  margin: 0 auto;
+`;
+
+const RouterLeftContainer = styled.div``;
+const RouterRightContainer = styled.div``;
+
+const RouterCenterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
+const RouterCenterWrapper = styled.div`
+  width: 600px;
+  display: flex;
+  height: 100%;
+  flex: 1;
+  min-height: 100vh;
+  justify-content: center;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+`;
 
 const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
-  return(
+  return (
     <Router>
-      <div style={{display: "flex", justifyContent: "center" , alignItems:"stretch", margin: "0 auto"}}>
-        {isLoggedIn && <Navigation userObj={userObj}/>}
+      <RouterContainer>
+        <RouterLeftContainer>
+          {isLoggedIn && <Navigation userObj={userObj} />}
+        </RouterLeftContainer>
         <Switch>
-          <>
-            {isLoggedIn ? (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "100%",
-                }}
-              >
-                <div
-                style={{
-                  width: "600px",
-                  display: "flex",
-                  height: "100%",
-                  flex:"1",
-                  minHeight:"100vh",
-                  justifyContent: "center",
-                  borderLeft: "1px solid #ddd",
-                  borderRight: "1px solid #ddd",
-                }}
-                >
-                  <Route exact path="/">
-                    <Home userObj={userObj}/>
-                  </Route>
-                  <Route exact path="/editprofile">
-                    <EditProfile userObj={userObj} refreshUser={refreshUser}/>
-                  </Route>
-                  <Route path="/profiles/:userId" component={OthersProfile} />
-                </div>
-              </div>  
-            ) : (
-              <Route exact path="/">
-                <Auth />
-              </Route>
-            )}
-          </>
+          {isLoggedIn ? (
+            <RouterCenterContainer>
+              <RouterCenterWrapper>
+                <Route exact path="/">
+                  <Home userObj={userObj} />
+                </Route>
+                <Route exact path="/editprofile">
+                  <EditProfile userObj={userObj} refreshUser={refreshUser} />
+                </Route>
+                <Route path="/profiles/:userId" component={OthersProfile} />
+              </RouterCenterWrapper>
+            </RouterCenterContainer>
+          ) : (
+            //If user is not Logged-in, Router will render Auth.js
+            <Route exact path="/">
+              <Auth />
+            </Route>
+          )}
         </Switch>
-        {isLoggedIn && <Footer />}
-      </div>
+        <RouterRightContainer>{isLoggedIn && <Footer />}</RouterRightContainer>
+      </RouterContainer>
     </Router>
   );
-}
+};
 
 export default AppRouter;
