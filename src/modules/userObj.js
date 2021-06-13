@@ -19,7 +19,7 @@ const initialState = {
 };
 
 /* 리듀서 선언 */
-export default function counter(state = initialState, action) {
+export default function userObjReducer(state = initialState, action) {
   switch (action.type) {
     case TOGGLE_DISPLAYNAME:
       return {

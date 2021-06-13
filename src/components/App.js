@@ -3,6 +3,8 @@ import AppRouter from "components/Router";
 import { authService } from "myBase";
 import Loader from "react-loader-spinner";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import { setDisplayName, setUid, setPhotoURL } from "../modules/userObj";
 
 const AppLoaderContainer = styled.div`
   height: 100vh;
@@ -12,37 +14,30 @@ const AppLoaderContainer = styled.div`
 `;
 
 function App() {
-  const [init, setInit] = useState(false);
-  const [userObj, setUserObj] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const dispatch = useDispatch();
+  const userObj = useSelector(store => store.userObjReducer);
 
   useEffect(() => {
     authService.onAuthStateChanged(user => {
       if (user) {
-        setUserObj({
-          displayName: user.displayName,
-          uid: user.uid,
-          photoURL: user.photoURL,
-          updateProfile: args => user.updateProfile(args),
-        });
+        dispatch(setDisplayName(user.displayName));
+        dispatch(setUid(user.uid));
+        dispatch(setPhotoURL(user.photoURL));
+        setIsLoggedIn(true);
+        console.log(userObj);
       } else {
-        setUserObj(null);
+        setIsLoggedIn(false);
       }
-      setInit(true);
+      setIsLoading(true);
     });
   }, []);
 
-  const refreshUser = () => {
-    setUserObj({ ...authService.currentUser });
-  };
-
   return (
     <>
-      {init ? (
-        <AppRouter
-          refreshUser={refreshUser}
-          isLoggedIn={Boolean(userObj)}
-          userObj={userObj}
-        />
+      {isLoading ? (
+        <AppRouter isLoggedIn={isLoggedIn} />
       ) : (
         <AppLoaderContainer>
           <Loader

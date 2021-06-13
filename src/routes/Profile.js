@@ -5,6 +5,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loader from "react-loader-spinner";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -137,10 +138,11 @@ const ProfileKweetsWrapper = styled.div`
   border-left: 1px solid #ddd;
 `;
 
-function Profile({ userObj }) {
+function Profile({}) {
   const [myKweets, setMyKweets] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [userBackGround, setUserBackGround] = useState("");
+  const userObj = useSelector(store => store.userObjReducer);
 
   const getMyKweets = async () => {
     const dbRef = await dbService

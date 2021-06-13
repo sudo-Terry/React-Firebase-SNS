@@ -8,6 +8,7 @@ import {
   faGlobeAmericas,
 } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 const FactoryContainer = styled.form`
   display: flex;
@@ -166,10 +167,11 @@ const FactoryKweetBtn = styled.span`
   }
 `;
 
-function KweetFactory({ userObj }) {
+function KweetFactory() {
   const [kweet, setKweet] = useState("");
   const [attachment, setAttachment] = useState("");
   const [backgroundColor, setBackgroundColor] = useState("white");
+  const userObj = useSelector(store => store.userObjReducer);
 
   const onSubmit = async event => {
     if (kweet === "") {

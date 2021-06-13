@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { dbService } from "myBase";
 import Kweet from "components/Kweet";
 import KweetFactory from "components/KweetFactory";
+import { useSelector } from "react-redux";
 
-const Home = ({ userObj }) => {
+const Home = () => {
   const [kweets, setKweets] = useState([]);
+  const userObj = useSelector(store => store.userObjReducer);
 
   useEffect(() => {
     dbService

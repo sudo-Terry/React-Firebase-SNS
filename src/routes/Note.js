@@ -1,6 +1,6 @@
 import React from "react";
 
-function Note({ userObj }) {
+function Note() {
   return <div></div>;
 }
 

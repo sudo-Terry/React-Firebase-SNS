@@ -11,6 +11,7 @@ import {
   faListAlt as farListAlt,
 } from "@fortawesome/free-regular-svg-icons";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 const NavContainer = styled.nav``;
 
@@ -39,7 +40,9 @@ const NavKweetBtn = styled.div`
   }
 `;
 
-function Navigation({ userObj }) {
+function Navigation() {
+  const userObj = useSelector(store => store.userObjReducer);
+
   return (
     <NavContainer>
       <NavWrapper>

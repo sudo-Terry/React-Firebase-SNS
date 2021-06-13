@@ -1,14 +1,18 @@
 import { authService, storageService, dbService } from "myBase";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setDisplayName, setPhotoURL } from "../modules/userObj";
 
-const EditProfile = ({ refreshUser, userObj }) => {
+const EditProfile = () => {
   const history = useHistory();
+  const userObj = useSelector(store => store.userObjReducer);
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
   const [userImg, setUserImg] = useState(userObj.photoURL);
   const [userBackGround, setUserBackGround] = useState("");
   const [toggleBack, setToggleBack] = useState(false);
   const [bio, setBio] = useState("");
+  const dispatch = useDispatch();
 
   const onLogOutClick = () => {
     authService.signOut();
@@ -36,6 +40,7 @@ const EditProfile = ({ refreshUser, userObj }) => {
       await user.updateProfile({
         displayName: newDisplayName,
       });
+      dispatch(setDisplayName(newDisplayName));
     }
     if (userObj.photoURL !== userImg) {
       const fileRef = storageService.ref().child(`userImg/${userObj.uid}`);
@@ -44,6 +49,7 @@ const EditProfile = ({ refreshUser, userObj }) => {
       await user.updateProfile({
         photoURL: userImgUrl,
       });
+      dispatch(setPhotoURL(userImg));
     }
     if (toggleBack) {
       const fileRef = storageService
@@ -54,7 +60,7 @@ const EditProfile = ({ refreshUser, userObj }) => {
       setUserBackGround(userBackGroundUrl);
       setToggleBack(false);
     }
-    refreshUser();
+    //refreshUser();
     await dbService
       .collection("users")
       .doc(`${userObj.uid}`)

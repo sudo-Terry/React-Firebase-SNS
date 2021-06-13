@@ -35,22 +35,22 @@ const RouterCenterWrapper = styled.div`
   border-right: 1px solid #ddd;
 `;
 
-const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
+const AppRouter = ({ isLoggedIn }) => {
   return (
     <Router>
       <RouterContainer>
         <RouterLeftContainer>
-          {isLoggedIn && <Navigation userObj={userObj} />}
+          {isLoggedIn && <Navigation />}
         </RouterLeftContainer>
         <Switch>
           {isLoggedIn ? (
             <RouterCenterContainer>
               <RouterCenterWrapper>
                 <Route exact path="/">
-                  <Home userObj={userObj} />
+                  <Home />
                 </Route>
                 <Route exact path="/editprofile">
-                  <EditProfile userObj={userObj} refreshUser={refreshUser} />
+                  <EditProfile />
                 </Route>
                 <Route path="/profiles/:userId" component={OthersProfile} />
               </RouterCenterWrapper>
