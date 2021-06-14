@@ -82,13 +82,6 @@ ul {
   border-bottom: 1px solid #ddd;
 }
 
-.app-loaderbox {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 /* Profile */
 /* ======================================================================== */
 /* ======================================================================== */
@@ -103,4 +96,28 @@ ul {
 
 .logOut {
   margin-top: 50px;
+}
+
+.openModal {
+  display: flex;
+  align-items: center;
+  animation: modal-bg-show 0.3s;
+}
+@keyframes modal-show {
+  from {
+    opacity: 0;
+    margin-top: -50px;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+@keyframes modal-bg-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

@@ -3,7 +3,7 @@ import AppRouter from "components/Router";
 import { authService } from "myBase";
 import Loader from "react-loader-spinner";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setDisplayName, setUid, setPhotoURL } from "../modules/userObj";
 
 const AppLoaderContainer = styled.div`
@@ -17,7 +17,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const dispatch = useDispatch();
-  const userObj = useSelector(store => store.userObjReducer);
 
   useEffect(() => {
     authService.onAuthStateChanged(user => {
@@ -25,8 +24,8 @@ function App() {
         dispatch(setDisplayName(user.displayName));
         dispatch(setUid(user.uid));
         dispatch(setPhotoURL(user.photoURL));
+        //get user-bio by uid from database
         setIsLoggedIn(true);
-        console.log(userObj);
       } else {
         setIsLoggedIn(false);
       }

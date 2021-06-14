@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loader from "react-loader-spinner";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import ProfileEditModal from "components/ProfileEditModal";
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -117,6 +118,25 @@ const ProfileEditBtn = styled.span`
   }
 `;
 
+const FollowBtn = styled.span`
+  width: 111px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  color: #04aaff;
+  border-radius: 9999px;
+  border: 1px solid #04aaff;
+
+  &:hover {
+    transition-duration: 0.2s;
+    background-color: #04abff49;
+  }
+`;
+
 const ProfileDisplayName = styled.div`
   margin-top: 4px;
   margin-left: 4px;
@@ -138,11 +158,12 @@ const ProfileKweetsWrapper = styled.div`
   border-left: 1px solid #ddd;
 `;
 
-function Profile({}) {
+function Profile({ userObj }) {
   const [myKweets, setMyKweets] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [userBackGround, setUserBackGround] = useState("");
-  const userObj = useSelector(store => store.userObjReducer);
+  const [modalOpen, setModalOpen] = useState(false);
+  const currentUserObj = useSelector(store => store.userObjReducer);
 
   const getMyKweets = async () => {
     const dbRef = await dbService
@@ -168,6 +189,13 @@ function Profile({}) {
     setIsLoading(false);
   };
 
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   useEffect(() => {
     if (userObj?.uid) {
       getMyKweets();
@@ -176,70 +204,86 @@ function Profile({}) {
   }, []);
 
   return (
-    <ProfileContainer>
-      <ProfileHeader>
-        <FontAwesomeIcon
-          icon={faArrowLeft}
-          color={"#04aaff"}
-          size="2x"
-          style={{ margin: "10px", cursor: "pointer" }}
+    <>
+      <ProfileContainer>
+        <ProfileHeader>
+          <FontAwesomeIcon
+            icon={faArrowLeft}
+            color={"#04aaff"}
+            size="2x"
+            style={{ margin: "10px", cursor: "pointer" }}
+          />
+          <ProfileHeaderTitle>{userObj.displayName}</ProfileHeaderTitle>
+        </ProfileHeader>
+        <ProfileBody>
+          <ProfileUserInfo>
+            <ProfileBackgroundWrapper>
+              {isLoading ? (
+                <ProfileBackgroundLoaderWrapper>
+                  <Loader
+                    type="Oval"
+                    color="#3d66ba"
+                    height={50}
+                    width={50}
+                    timeout={3000} //3 secs
+                  />
+                </ProfileBackgroundLoaderWrapper>
+              ) : (
+                <ProfileBackgroundLink
+                  href={userBackGround}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <ProfileBackgroundImg
+                    src={userBackGround}
+                    alt="background"
+                    draggable
+                  />
+                </ProfileBackgroundLink>
+              )}
+            </ProfileBackgroundWrapper>
+            <ProfileImgLink
+              href={userObj.photoURL}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <ProfileImg src={userObj.photoURL} alt="profile" />
+            </ProfileImgLink>
+            <ProfileInfoWrapper>
+              <ProfiledEditButtonWrapper>
+                {currentUserObj.uid === userObj.uid ? (
+                  <ProfileEditBtn onClick={openModal}>
+                    프로필 수정
+                  </ProfileEditBtn>
+                ) : (
+                  <FollowBtn>팔로우</FollowBtn>
+                )}
+              </ProfiledEditButtonWrapper>
+              <ProfileDisplayName>
+                {userObj.displayName}
+                <ProfileUid>@{userObj.uid}</ProfileUid>
+              </ProfileDisplayName>
+            </ProfileInfoWrapper>
+          </ProfileUserInfo>
+        </ProfileBody>
+        <ProfileKweetsWrapper>
+          {myKweets
+            .slice(0)
+            .reverse()
+            .map(kweet => (
+              <Kweet key={kweet.id} kweetObj={kweet} isOwner={true} />
+            ))}
+        </ProfileKweetsWrapper>
+      </ProfileContainer>
+      {modalOpen ? (
+        <ProfileEditModal
+          modalOpen={modalOpen}
+          open={openModal}
+          close={closeModal}
+          header="프로필 수정"
         />
-        <ProfileHeaderTitle>{userObj.displayName}</ProfileHeaderTitle>
-      </ProfileHeader>
-      <ProfileBody>
-        <ProfileUserInfo>
-          <ProfileBackgroundWrapper>
-            {isLoading ? (
-              <ProfileBackgroundLoaderWrapper>
-                <Loader
-                  type="Oval"
-                  color="#3d66ba"
-                  height={50}
-                  width={50}
-                  timeout={3000} //3 secs
-                />
-              </ProfileBackgroundLoaderWrapper>
-            ) : (
-              <ProfileBackgroundLink
-                href={userBackGround}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                <ProfileBackgroundImg
-                  src={userBackGround}
-                  alt="background"
-                  draggable
-                />
-              </ProfileBackgroundLink>
-            )}
-          </ProfileBackgroundWrapper>
-          <ProfileImgLink
-            href={userObj.photoURL}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <ProfileImg src={userObj.photoURL} alt="profile" />
-          </ProfileImgLink>
-          <ProfileInfoWrapper>
-            <ProfiledEditButtonWrapper>
-              <ProfileEditBtn>프로필 수정</ProfileEditBtn>
-            </ProfiledEditButtonWrapper>
-            <ProfileDisplayName>
-              {userObj.displayName}
-              <ProfileUid>@{userObj.uid}</ProfileUid>
-            </ProfileDisplayName>
-          </ProfileInfoWrapper>
-        </ProfileUserInfo>
-      </ProfileBody>
-      <ProfileKweetsWrapper>
-        {myKweets
-          .slice(0)
-          .reverse()
-          .map(kweet => (
-            <Kweet key={kweet.id} kweetObj={kweet} isOwner={true} />
-          ))}
-      </ProfileKweetsWrapper>
-    </ProfileContainer>
+      ) : null}
+    </>
   );
 }
 

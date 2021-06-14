@@ -258,7 +258,7 @@ const Kweet = ({ kweetObj, isOwner }) => {
               />
             ) : (
               <KweetProfileWrapper>
-                <Link to={`/${creatorObj.uid}`}>
+                <Link to={`/profiles/${creatorObj.uid}`}>
                   <KweetProfileImg src={creatorObj.photoURL} alt="profile" />
                 </Link>
               </KweetProfileWrapper>
