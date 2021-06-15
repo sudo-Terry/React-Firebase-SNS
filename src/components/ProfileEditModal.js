@@ -124,6 +124,8 @@ const ModalBackgroundLoaderWrapper = styled.div`
 const ModalBackgroundImgWrapper = styled.div``;
 
 const ModalBackgroundEditIconWrapper = styled.div`
+  width: 100%;
+  height: 100%;
   position: absolute;
   display: flex;
   align-items: center;
