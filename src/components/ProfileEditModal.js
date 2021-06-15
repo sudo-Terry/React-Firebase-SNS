@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { dbService, storageService } from "myBase";
 import { useSelector } from "react-redux";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import "../styles/styles.css";
 import Loader from "react-loader-spinner";
@@ -88,10 +90,10 @@ const ModalMain = styled.main`
 
 const ModalMainContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 700px;
   display: flex;
+  overflow: scroll;
   flex-direction: column;
-  overflow: auto;
   position: relative;
 `;
 
@@ -119,19 +121,29 @@ const ModalBackgroundLoaderWrapper = styled.div`
   align-items: center;
 `;
 
-const ModalBackgroundLink = styled.a``;
-const ModalImgLink = styled.a``;
+const ModalBackgroundImgWrapper = styled.div``;
+
+const ModalBackgroundEditIconWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ModalImgWrapper = styled.div`
+  overflow: hidden;
+  border-radius: 50%;
+  margin-left: 15px;
+  position: absolute;
+  top: 130px;
+  border: 4px solid white;
+`;
 
 const ModalImg = styled.img`
   width: 140px;
   height: 140px;
-  overflow: hidden;
-  object-fit: cover;
   border-radius: 50%;
-  border: 4px solid white;
-  margin-left: 15px;
-  position: absolute;
-  top: 130px;
+  object-fit: cover;
 
   &:hover {
     filter: brightness(70%);
@@ -144,6 +156,15 @@ const ModalInputsContainer = styled.div`
   display: flex;
   margin-top: 70px;
   flex-direction: column;
+`;
+
+const ModalBirthInputWrapper = styled.div`
+  height: 120px;
+  border: 1px solid #888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px 16px;
 `;
 
 function ProfileEditModal({ open, close, header }) {
@@ -193,33 +214,34 @@ function ProfileEditModal({ open, close, header }) {
                     />
                   </ModalBackgroundLoaderWrapper>
                 ) : (
-                  <ModalBackgroundLink
-                    href={userBackGround}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
+                  <ModalBackgroundImgWrapper>
+                    <ModalBackgroundEditIconWrapper>
+                      <FontAwesomeIcon
+                        icon={faEdit}
+                        color="white"
+                        size="2x"
+                        fixedWidth
+                      />
+                    </ModalBackgroundEditIconWrapper>
                     <ModalBackgroundImg
                       src={userBackGround}
                       alt="background"
                       draggable
                     />
-                  </ModalBackgroundLink>
+                  </ModalBackgroundImgWrapper>
                 )}
               </ModalBackgroundWrapper>
-              <ModalImgLink
-                href={userObj.photoURL}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
+              <ModalImgWrapper>
                 <ModalImg src={userObj.photoURL} alt="profile" />
-              </ModalImgLink>
+              </ModalImgWrapper>
               <ModalInputsContainer>
-                <ModalInputComponent title="이름" />
-                <ModalInputComponent title="자기소개" />
-                <ModalInputComponent title="위치" />
-                <ModalInputComponent title="웹사이트" />
-                <ModalInputComponent title="웹사이트" />
-                <ModalInputComponent title="웹사이트" />
+                <ModalInputComponent title="이름" maxByte={50} />
+                <ModalInputComponent title="자기소개" maxByte={160} isArea />
+                <ModalInputComponent title="위치" maxByte={30} />
+                <ModalInputComponent title="웹사이트" maxByte={100} />
+                <ModalBirthInputWrapper>
+                  생년월일 수정하는 공간
+                </ModalBirthInputWrapper>
               </ModalInputsContainer>
             </ModalMainContainer>
           </ModalMain>

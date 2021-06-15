@@ -155,7 +155,6 @@ const ProfileKweetsWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-flow: column;
-  border-left: 1px solid #ddd;
 `;
 
 function Profile({ userObj }) {
