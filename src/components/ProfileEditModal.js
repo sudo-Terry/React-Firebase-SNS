@@ -108,29 +108,66 @@ const ModalBackgroundImg = styled.img`
   height: 200px;
   overflow: hidden;
   object-fit: cover;
-
-  &:hover {
-    filter: brightness(70%);
-    transition-duration: 0.2s;
-  }
 `;
 
 const ModalBackgroundLoaderWrapper = styled.div`
-  display: flex;
+  width: 100%;
   height: 100%;
-  justify-content: center;
+  display: flex;
   align-items: center;
+  justify-content: center;
 `;
 
 const ModalBackgroundImgWrapper = styled.div``;
 
-const ModalBackgroundEditIconWrapper = styled.div`
+const ModalImgEditIconContainer = styled.div`
   width: 100%;
   height: 100%;
-  position: absolute;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+`;
+
+const ModalImgEditIconWrapper = styled.div`
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  z-index: 100;
+  top: 30%;
+  border-radius: 50%;
+  padding: 15px 10px 15px 15px;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(80%);
+    transition-duration: 0.2s;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+`;
+
+const ModalBackgroundEditIconContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalBackgroundEditIconWrapper = styled.div`
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  z-index: 100;
+  top: 40%;
+  border-radius: 50%;
+  padding: 15px 10px 15px 15px;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(80%);
+    transition-duration: 0.2s;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
 `;
 
 const ModalImgWrapper = styled.div`
@@ -147,11 +184,6 @@ const ModalImg = styled.img`
   height: 140px;
   border-radius: 50%;
   object-fit: cover;
-
-  &:hover {
-    filter: brightness(70%);
-    transition-duration: 0.2s;
-  }
 `;
 
 const ModalInputsContainer = styled.div`
@@ -246,17 +278,20 @@ function ProfileEditModal({ open, close, header }) {
                   </ModalBackgroundLoaderWrapper>
                 ) : (
                   <ModalBackgroundImgWrapper>
-                    <ModalBackgroundEditIconWrapper>
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        color="white"
-                        size="2x"
-                        fixedWidth
-                      />
-                    </ModalBackgroundEditIconWrapper>
+                    <ModalBackgroundEditIconContainer>
+                      <ModalBackgroundEditIconWrapper>
+                        <FontAwesomeIcon
+                          icon={faEdit}
+                          color="white"
+                          size="2x"
+                          fixedWidth
+                        />
+                      </ModalBackgroundEditIconWrapper>
+                    </ModalBackgroundEditIconContainer>
                     <ModalBackgroundImg
                       src={userBackGround}
                       alt="background"
+                      className="backImg"
                       draggable
                     />
                   </ModalBackgroundImgWrapper>
@@ -264,6 +299,16 @@ function ProfileEditModal({ open, close, header }) {
               </ModalBackgroundWrapper>
               <ModalImgWrapper>
                 <ModalImg src={userObj.photoURL} alt="profile" />
+                <ModalImgEditIconContainer>
+                  <ModalImgEditIconWrapper>
+                    <FontAwesomeIcon
+                      icon={faEdit}
+                      color="white"
+                      size="2x"
+                      fixedWidth
+                    />
+                  </ModalImgEditIconWrapper>
+                </ModalImgEditIconContainer>
               </ModalImgWrapper>
               <ModalInputsContainer>
                 <ModalInputComponent
