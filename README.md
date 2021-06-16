@@ -6,7 +6,7 @@ Google Firebase 서비스를 이용하여 Server-Side를 구축하고, React를 
 
 ## 1. 웹 URL
 
-> 홈페이지 링크: [Kwitter](https://sudo-terry.github.io/Deploy-Kwitter/)
+> 홈페이지 링크: [Kwitter](https://sudo-terry.github.io/Deploy-Kwitter/) (현재 개발을 위해 비활성화)
 
 ## 2. 사용된 기술/프레임워크
 
