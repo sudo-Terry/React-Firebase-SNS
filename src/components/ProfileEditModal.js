@@ -128,12 +128,19 @@ const ModalImgEditIconContainer = styled.div`
   align-items: center;
 `;
 
+const BackgroundLabel = styled.label``;
+
+const BackgroundInput = styled.input`
+  display: none;
+`;
+
 const ModalImgEditIconWrapper = styled.div`
   width: 60px;
   height: 60px;
   position: absolute;
   z-index: 100;
   top: 30%;
+  right: 28%;
   border-radius: 50%;
   padding: 15px 10px 15px 15px;
   cursor: pointer;
@@ -153,12 +160,15 @@ const ModalBackgroundEditIconContainer = styled.div`
   align-items: center;
 `;
 
+const PhotoURLLabel = styled.label``;
+
 const ModalBackgroundEditIconWrapper = styled.div`
   width: 60px;
   height: 60px;
   position: absolute;
   z-index: 100;
   top: 40%;
+  right: 45%;
   border-radius: 50%;
   padding: 15px 10px 15px 15px;
   cursor: pointer;
@@ -168,6 +178,10 @@ const ModalBackgroundEditIconWrapper = styled.div`
     transition-duration: 0.2s;
     background-color: rgba(0, 0, 0, 0.6);
   }
+`;
+
+const ModalImageInput = styled.input`
+  display: none;
 `;
 
 const ModalImgWrapper = styled.div`
@@ -207,7 +221,9 @@ function ProfileEditModal({ open, close, header }) {
   const dispatch = useDispatch();
 
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
+  const [userImg, setUserImg] = useState(userObj.photoURL);
   const [userBackGround, setUserBackGround] = useState("");
+  const [toggleBack, setToggleBack] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -222,12 +238,62 @@ function ProfileEditModal({ open, close, header }) {
     setIsLoading(false);
   };
 
+  const onBackChange = event => {
+    const {
+      target: { files },
+    } = event;
+    const theFile = files[0];
+    const reader = new FileReader();
+    reader.onloadend = finishedEvent => {
+      const {
+        currentTarget: { result },
+      } = finishedEvent;
+      setUserBackGround(result);
+    };
+    reader.readAsDataURL(theFile);
+    setToggleBack(true);
+  };
+
+  const onPhotoURLChange = event => {
+    const {
+      target: { files },
+    } = event;
+    const theFile = files[0];
+    const reader = new FileReader();
+    reader.onloadend = finishedEvent => {
+      const {
+        currentTarget: { result },
+      } = finishedEvent;
+      setUserImg(result);
+    };
+    reader.readAsDataURL(theFile);
+  };
+
   const onSubmit = async event => {
+    event.preventDefault();
     if (userObj.displayName !== newDisplayName) {
       await authService.currentUser.updateProfile({
         displayName: newDisplayName,
       });
       dispatch(setDisplayName(newDisplayName));
+    }
+    if (userObj.photoURL !== userImg) {
+      const fileRef = storageService.ref().child(`userImg/${userObj.uid}`);
+      const response = await fileRef.putString(userImg, "data_url");
+      const userImgUrl = await response.ref.getDownloadURL();
+      await authService.currentUser.updateProfile({
+        photoURL: userImgUrl,
+      });
+      dispatch(setPhotoURL(userImg));
+    }
+    if (toggleBack) {
+      const fileRef = storageService
+        .ref()
+        .child(`userBackGround/${userObj.uid}`);
+      const response = await fileRef.putString(userBackGround, "data_url");
+      const userBackGroundUrl = await response.ref.getDownloadURL();
+      setUserBackGround(userBackGroundUrl);
+      setToggleBack(false);
     }
     await dbService
       .collection("users")
@@ -279,35 +345,56 @@ function ProfileEditModal({ open, close, header }) {
                 ) : (
                   <ModalBackgroundImgWrapper>
                     <ModalBackgroundEditIconContainer>
-                      <ModalBackgroundEditIconWrapper>
-                        <FontAwesomeIcon
-                          icon={faEdit}
-                          color="white"
-                          size="2x"
-                          fixedWidth
-                        />
-                      </ModalBackgroundEditIconWrapper>
+                      <BackgroundLabel htmlFor="userBackGround-file">
+                        <ModalBackgroundEditIconWrapper>
+                          <FontAwesomeIcon
+                            icon={faEdit}
+                            color="white"
+                            size="2x"
+                            fixedWidth
+                          />
+                        </ModalBackgroundEditIconWrapper>
+                      </BackgroundLabel>
+                      <BackgroundInput
+                        id="userBackGround-file"
+                        type="file"
+                        accept="image/*"
+                        onChange={onBackChange}
+                        style={{
+                          opacity: 0,
+                        }}
+                      />
                     </ModalBackgroundEditIconContainer>
                     <ModalBackgroundImg
                       src={userBackGround}
                       alt="background"
-                      className="backImg"
                       draggable
                     />
                   </ModalBackgroundImgWrapper>
                 )}
               </ModalBackgroundWrapper>
               <ModalImgWrapper>
-                <ModalImg src={userObj.photoURL} alt="profile" />
+                <ModalImg src={userImg} alt="profile" />
                 <ModalImgEditIconContainer>
-                  <ModalImgEditIconWrapper>
-                    <FontAwesomeIcon
-                      icon={faEdit}
-                      color="white"
-                      size="2x"
-                      fixedWidth
-                    />
-                  </ModalImgEditIconWrapper>
+                  <PhotoURLLabel htmlFor="photoURL-file">
+                    <ModalImgEditIconWrapper>
+                      <FontAwesomeIcon
+                        icon={faEdit}
+                        color="white"
+                        size="2x"
+                        fixedWidth
+                      />
+                    </ModalImgEditIconWrapper>
+                  </PhotoURLLabel>
+                  <ModalImageInput
+                    id="photoURL-file"
+                    type="file"
+                    accept="image/*"
+                    onChange={onPhotoURLChange}
+                    style={{
+                      opacity: 0,
+                    }}
+                  />
                 </ModalImgEditIconContainer>
               </ModalImgWrapper>
               <ModalInputsContainer>
