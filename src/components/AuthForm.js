@@ -21,11 +21,13 @@ const AuthFormInput = styled.input`
 `;
 
 const AuthFormSubmit = styled.input`
-  text-align: center;
-  background: #04aaff;
-  color: white;
-  margin-top: 10;
   cursor: pointer;
+  width: 80%;
+  padding: 7px 0px;
+  text-align: center;
+  color: white;
+  border-radius: 9999px;
+  background-color: #04aaff;
 
   &:hover {
     background-color: #0e8ac9;

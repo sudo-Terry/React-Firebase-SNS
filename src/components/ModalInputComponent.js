@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const ModalInputContainer = styled.div`
@@ -83,22 +83,16 @@ const ModalArea = styled.textarea`
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
+  font-family: "Montserrat", sans-serif;
 
   &:focus {
     border: none;
   }
 `;
 
-function ModalInputComponent({ title, active, maxByte, isArea }) {
-  const [nowByte, setNowByte] = useState(0);
+function ModalInputComponent({ title, defaultValue, maxByte, isArea, setter }) {
+  const [nowByte, setNowByte] = useState(String(defaultValue).length);
   const [isFocused, setIsFocused] = useState(false);
-
-  const checkByte = e => {
-    const {
-      target: { value },
-    } = e;
-    setNowByte(value.length);
-  };
 
   const onFocus = () => {
     setIsFocused(true);
@@ -106,6 +100,14 @@ function ModalInputComponent({ title, active, maxByte, isArea }) {
 
   const onBlur = () => {
     setIsFocused(false);
+  };
+
+  const onChange = e => {
+    const {
+      target: { value },
+    } = e;
+    setNowByte(value.length);
+    setter(value);
   };
 
   return (
@@ -121,13 +123,15 @@ function ModalInputComponent({ title, active, maxByte, isArea }) {
             </ModalInputTitleByteWrapper>
             {isArea ? (
               <ModalArea
+                onChange={onChange}
+                value={defaultValue}
                 maxLength={maxByte - 1}
-                onChange={checkByte}
               ></ModalArea>
             ) : (
               <ModalInput
+                onChange={onChange}
+                value={defaultValue}
                 maxLength={maxByte - 1}
-                onChange={checkByte}
               ></ModalInput>
             )}
           </ModalInputInnerWrapper>

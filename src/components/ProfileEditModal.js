@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { dbService, storageService } from "myBase";
-import { useSelector } from "react-redux";
+import { authService, dbService, storageService } from "myBase";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import "../styles/styles.css";
 import Loader from "react-loader-spinner";
 import ModalInputComponent from "./ModalInputComponent";
+import { useSelector, useDispatch } from "react-redux";
+import { setDisplayName, setPhotoURL } from "../modules/userObj";
 
 const ModalContainer = styled.div`
   display: ${({ isOpen }) => (isOpen ? "none" : "flex")};
@@ -170,9 +171,13 @@ const ModalBirthInputWrapper = styled.div`
 `;
 
 function ProfileEditModal({ open, close, header }) {
-  const [userBackGround, setUserBackGround] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const userObj = useSelector(store => store.userObjReducer);
+  const dispatch = useDispatch();
+
+  const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
+  const [userBackGround, setUserBackGround] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const getUserBackGround = async () => {
     setIsLoading(true);
@@ -183,6 +188,30 @@ function ProfileEditModal({ open, close, header }) {
     userBackGroundUrl = await spaceRef.getDownloadURL();
     setUserBackGround(userBackGroundUrl);
     setIsLoading(false);
+  };
+
+  const onSubmit = async event => {
+    if (userObj.displayName !== newDisplayName) {
+      await authService.currentUser.updateProfile({
+        displayName: newDisplayName,
+      });
+      dispatch(setDisplayName(newDisplayName));
+    }
+    await dbService
+      .collection("users")
+      .doc(`${userObj.uid}`)
+      .set({
+        uid: authService.currentUser.uid,
+        displayName: authService.currentUser.displayName,
+        photoURL: authService.currentUser.photoURL,
+      })
+      .then(() => {
+        console.log("Document successfully written!");
+      })
+      .catch(error => {
+        console.error("Error writing document: ", error);
+      });
+    close();
   };
 
   useEffect(() => {
@@ -199,7 +228,7 @@ function ProfileEditModal({ open, close, header }) {
             <ModalCloseBtn onClick={close}> &times; </ModalCloseBtn>
             <ModalTitle>{header}</ModalTitle>
             <ModalSubmitWrapper>
-              <ModalSubmitBtn onClick={close}>저장</ModalSubmitBtn>
+              <ModalSubmitBtn onClick={onSubmit}>저장</ModalSubmitBtn>
             </ModalSubmitWrapper>
           </ModalHeader>
           <ModalMain>
@@ -237,10 +266,31 @@ function ProfileEditModal({ open, close, header }) {
                 <ModalImg src={userObj.photoURL} alt="profile" />
               </ModalImgWrapper>
               <ModalInputsContainer>
-                <ModalInputComponent title="이름" maxByte={50} />
-                <ModalInputComponent title="자기소개" maxByte={160} isArea />
-                <ModalInputComponent title="위치" maxByte={30} />
-                <ModalInputComponent title="웹사이트" maxByte={100} />
+                <ModalInputComponent
+                  title="이름"
+                  defaultValue={newDisplayName}
+                  maxByte={50}
+                  setter={setNewDisplayName}
+                />
+                <ModalInputComponent
+                  title="자기소개"
+                  defaultValue={"default"}
+                  maxByte={160}
+                  setter={setNewDisplayName}
+                  isArea
+                />
+                <ModalInputComponent
+                  title="위치"
+                  defaultValue={"default"}
+                  maxByte={30}
+                  setter={setNewDisplayName}
+                />
+                <ModalInputComponent
+                  title="웹사이트"
+                  defaultValue={"default"}
+                  maxByte={100}
+                  setter={setNewDisplayName}
+                />
                 <ModalBirthInputWrapper>
                   생년월일 수정하는 공간
                 </ModalBirthInputWrapper>
