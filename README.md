@@ -48,6 +48,7 @@ Kwitter의 홈 페이지에서는 타 사용자들과 소통을 할 수 있습�
 
 </br></br></br></br></br>
 ![displayNameChange](https://user-images.githubusercontent.com/76080411/122160648-4490c580-ceab-11eb-9823-37da53369fb1.gif)
+![photosChange](https://user-images.githubusercontent.com/76080411/122183103-e1f8f300-cec5-11eb-9df3-ee20561e3d86.gif)
 </br></br></br></br></br>
 
 내 프로필 화면에서 프로필 수정 버튼을 누르는 것으로, 나의 프로필 이미지 등 다양한 정보를 수정하고 관리할 수 있습니다.
