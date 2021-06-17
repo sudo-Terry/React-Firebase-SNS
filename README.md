@@ -12,7 +12,8 @@ Google Firebase 서비스를 이용하여 Server-Side를 구축하고, React를 
 
     -React
     -Google Firebase
-    -FontAwesome
+    -React-Redux
+    -styled-components
 
 ## 3. 프로젝트 소개
 
