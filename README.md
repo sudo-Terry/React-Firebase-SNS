@@ -1,21 +1,21 @@
-# React-Firebase-SNS
+# 🙆‍♂️React-Firebase-SNS🙇‍♂️
 
-Google Firebase 서비스를 이용하여 Server-Side를 구축하고, React를 활용하여 웹 사이트를 만들며 진행중인 프로젝트입니다. 유명 소셜 미디어 서비스인 [Twitter](https://twitter.com/?lang=ko)에서 지원하는 기능을 최대한 많이, 비슷하게 구현하는 동시에 최적화된 성능을 가지는 것을 목표로 두고 있습니다. 아래 웹 URL을 통해 웹 사이트에 접속하여 회원 가입을 하시면 현재 개발된 기능들을 체험할 수 있습니다.
+Google Firebase 서비스를 이용하여 Server-Side를 구축하고, React를 활용하여 웹 사이트를 만들며 진행중인 프로젝트입니다. 유명 소셜 미디어 서비스인 [Twitter](https://twitter.com)에서 지원하는 기능을 최대한 많이, 비슷하게 구현하는 동시에 최적화된 성능을 가지는 것을 목표로 두고 있습니다. 아래 웹 URL을 통해 웹 사이트에 접속하여 회원 가입을 하시면 현재 개발된 기능들을 체험할 수 있습니다.
 
 프로젝트 시작일: 2021년도 4월 12일
 
-## 1. 웹 URL
+## 1. 웹 URL 🌏
 
 > 홈페이지 링크: [Kwitter](https://sudo-terry.github.io/Deploy-Kwitter/) (현재 개발을 위해 비활성화)
 
-## 2. 사용된 기술/프레임워크
+## 2. 사용된 기술/프레임워크 ⚙
 
     -React
     -Google Firebase
     -React-Redux
     -styled-components
 
-## 3. 프로젝트 소개
+## 3. 프로젝트 소개 (FrontEnd) 📑
 
 </br></br></br></br></br>
 ![githubSignin](https://user-images.githubusercontent.com/76080411/122159499-68530c00-cea9-11eb-841c-db8e8cc5a5d1.gif)
@@ -54,17 +54,21 @@ Kwitter의 홈 페이지에서는 타 사용자들과 소통을 할 수 있습�
 
 내 프로필 화면에서 프로필 수정 버튼을 누르는 것으로, 나의 프로필 이미지 등 다양한 정보를 수정하고 관리할 수 있습니다.
 
-## 4. 설치
+## 4 프로젝트 소개 (BackEnd)💾
 
-    yarn add
-    
-## 5. 로그
+### 4.1 Firestore Database
 
-## 6. 확인된 버그
+## 5. 설치 및 환경 💻
+
+### 5.1 
+
+    yarn add   
+
+## 6. 이슈 및 버그 리포트 💬
 
     -다른 유저 프로필 화면에서 좌측 메뉴의 버튼으로 내 프로필로 이동할 경우, url은 정상적으로 변경되나 화면은 그대로인 버그 확인
     -
     
-## 7. 참고
+## 7. 참고 ❗
 이 프로젝트는 Nomad Coder님의 강의인 '트위터 클론코딩'을 기반으로 뼈대를 잡고 살을 붙여 개발한 프로젝트입니다.<br/>
 [강의 URL]: https://nomadcoders.co/nwitter/lobby
