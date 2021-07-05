@@ -6,7 +6,7 @@
 
 ## 1. 웹 URL 🌏
 
-> 홈페이지 링크: [Kwitter](https://sudo-terry.github.io/Deploy-Kwitter/) (현재 개발을 위해 비활성화)
+> 홈페이지 링크: [Kwitter](https://sudo-terry.github.io/React-Firebase-SNS/#/)
 
 ## 2. 사용된 기술/프레임워크 ⚙
 
