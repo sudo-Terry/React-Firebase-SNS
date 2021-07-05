@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/deploy-kwitter/static/css/main.f5ffa615.chunk.css",
-    "main.js": "/deploy-kwitter/static/js/main.8082ca85.chunk.js",
-    "main.js.map": "/deploy-kwitter/static/js/main.8082ca85.chunk.js.map",
-    "runtime-main.js": "/deploy-kwitter/static/js/runtime-main.34df94b6.js",
-    "runtime-main.js.map": "/deploy-kwitter/static/js/runtime-main.34df94b6.js.map",
-    "static/js/2.62f3145d.chunk.js": "/deploy-kwitter/static/js/2.62f3145d.chunk.js",
-    "static/js/2.62f3145d.chunk.js.map": "/deploy-kwitter/static/js/2.62f3145d.chunk.js.map",
-    "index.html": "/deploy-kwitter/index.html",
-    "static/css/main.f5ffa615.chunk.css.map": "/deploy-kwitter/static/css/main.f5ffa615.chunk.css.map",
-    "static/js/2.62f3145d.chunk.js.LICENSE.txt": "/deploy-kwitter/static/js/2.62f3145d.chunk.js.LICENSE.txt"
+    "main.css": "/React-Firebase-SNS/static/css/main.f5ffa615.chunk.css",
+    "main.js": "/React-Firebase-SNS/static/js/main.8082ca85.chunk.js",
+    "main.js.map": "/React-Firebase-SNS/static/js/main.8082ca85.chunk.js.map",
+    "runtime-main.js": "/React-Firebase-SNS/static/js/runtime-main.f3df1464.js",
+    "runtime-main.js.map": "/React-Firebase-SNS/static/js/runtime-main.f3df1464.js.map",
+    "static/js/2.ebdb05df.chunk.js": "/React-Firebase-SNS/static/js/2.ebdb05df.chunk.js",
+    "static/js/2.ebdb05df.chunk.js.map": "/React-Firebase-SNS/static/js/2.ebdb05df.chunk.js.map",
+    "index.html": "/React-Firebase-SNS/index.html",
+    "static/css/main.f5ffa615.chunk.css.map": "/React-Firebase-SNS/static/css/main.f5ffa615.chunk.css.map",
+    "static/js/2.ebdb05df.chunk.js.LICENSE.txt": "/React-Firebase-SNS/static/js/2.ebdb05df.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.34df94b6.js",
-    "static/js/2.62f3145d.chunk.js",
+    "static/js/runtime-main.f3df1464.js",
+    "static/js/2.ebdb05df.chunk.js",
     "static/css/main.f5ffa615.chunk.css",
     "static/js/main.8082ca85.chunk.js"
   ]
