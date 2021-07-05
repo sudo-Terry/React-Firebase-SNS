@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/deploy-kwitter/static/css/main.f5ffa615.chunk.css",
+    "main.js": "/deploy-kwitter/static/js/main.8082ca85.chunk.js",
+    "main.js.map": "/deploy-kwitter/static/js/main.8082ca85.chunk.js.map",
+    "runtime-main.js": "/deploy-kwitter/static/js/runtime-main.34df94b6.js",
+    "runtime-main.js.map": "/deploy-kwitter/static/js/runtime-main.34df94b6.js.map",
+    "static/js/2.62f3145d.chunk.js": "/deploy-kwitter/static/js/2.62f3145d.chunk.js",
+    "static/js/2.62f3145d.chunk.js.map": "/deploy-kwitter/static/js/2.62f3145d.chunk.js.map",
+    "index.html": "/deploy-kwitter/index.html",
+    "static/css/main.f5ffa615.chunk.css.map": "/deploy-kwitter/static/css/main.f5ffa615.chunk.css.map",
+    "static/js/2.62f3145d.chunk.js.LICENSE.txt": "/deploy-kwitter/static/js/2.62f3145d.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.34df94b6.js",
+    "static/js/2.62f3145d.chunk.js",
+    "static/css/main.f5ffa615.chunk.css",
+    "static/js/main.8082ca85.chunk.js"
+  ]
+}
