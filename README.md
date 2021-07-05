@@ -6,7 +6,7 @@
 
 ## 1. 웹 URL 🌏
 
-> 홈페이지 링크: [Kwitter](https://sudo-terry.github.io/Deploy-Kwitter/) (현재 개발을 위해 비활성화)
+> 홈페이지 링크: [Kwitter](https://sudo-terry.github.io/React-Firebase-SNS/#/)
 
 ## 2. 사용된 기술/프레임워크 ⚙
 
@@ -93,7 +93,21 @@ Kwitter의 홈 페이지에서는 타 사용자들과 소통을 할 수 있습�
 
 ### 5.1 설치
 
-    yarn add   
+업로드된 파일을 폴더에 넣고 코드 편집기를 열어 코드 편집기의 터미널에 아래와 같은 명령어를 입력해 주세요.
+
+    npm install
+    
+또는
+    
+    yarn add
+    
+해당 명령어는 package.json파일에 적혀있는 프로젝트에 필요한 패키지들을 다운받도록 해줍니다. 그 후, 실행을 위해 다음과 같은 명령어를 입력합니다.
+
+    npm start
+    
+또는
+ 
+    yarn start     
     
 ### 5.2 지원 환경
 
