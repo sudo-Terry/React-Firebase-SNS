@@ -60,7 +60,6 @@ const EditProfile = () => {
       setUserBackGround(userBackGroundUrl);
       setToggleBack(false);
     }
-    //refreshUser();
     await dbService
       .collection("users")
       .doc(`${userObj.uid}`)

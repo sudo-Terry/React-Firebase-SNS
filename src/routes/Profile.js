@@ -162,6 +162,7 @@ function Profile({ userObj }) {
   const [isLoading, setIsLoading] = useState(false);
   const [userBackGround, setUserBackGround] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  
   const currentUserObj = useSelector(store => store.userObjReducer);
 
   const getMyKweets = async () => {
